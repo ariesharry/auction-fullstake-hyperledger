@@ -1,11 +1,10 @@
 const express = require('express');
 const app = express();
+const auctionRoutes = require('./api/routes/auction');
+const bidRoutes = require('./api/routes/bid');
+const morgan = require('morgan');
 
-app.use((req, res, next) =>{
-    res.status(200).json({
-        message: 'success!'
-    });
-
-});
+app.use('/auction', auctionRoutes);
+app.use('/bid', bidRoutes);
 
 module.exports = app;

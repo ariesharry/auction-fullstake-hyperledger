@@ -248,7 +248,7 @@ export const CommodityForm = () => {
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
           <Button variant="contained">
-            Submit
+            Add Auction
           </Button>
         </CardActions>
       </Card>

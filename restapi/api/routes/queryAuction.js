@@ -54,11 +54,13 @@ router.post('/', async function (req, res, next) {
 			const walletPath = path.join(__dirname, 'wallet/org1');
 			const wallet = await buildWallet(Wallets, walletPath);
 			auctionDetails = await queryAuction(ccp, wallet, user, auctionID);
+			auctionDetails = JSON.parse(auctionDetails);
 		} else if (org === 'Org2' || org === 'org2') {
 			const ccp = buildCCPOrg2();
 			const walletPath = path.join(__dirname, 'wallet/org2');
 			const wallet = await buildWallet(Wallets, walletPath);
-			await queryAuction(ccp, wallet, user, auctionID);
+			auctionDetails = await queryAuction(ccp, wallet, user, auctionID);
+			auctionDetails = JSON.parse(auctionDetails);
 		} else {
 			console.log('Usage: node queryAuction.js org userID auctionID');
 			console.log('Org must be Org1 or Org2');

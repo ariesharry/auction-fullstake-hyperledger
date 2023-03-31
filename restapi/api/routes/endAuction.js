@@ -7,7 +7,7 @@ const { buildCCPOrg1, buildCCPOrg2, buildWallet, prettyJSONString } = require('.
 const myChannel = 'mychannel';
 const myChaincodeName = 'auction';
 
-async function queryAuction (ccp, wallet, user, auctionID) {
+async function endAuction (ccp, wallet, user, auctionID) {
 	try {
 		const gateway = new Gateway();
 		// connect using Discovery enabled
@@ -18,15 +18,32 @@ async function queryAuction (ccp, wallet, user, auctionID) {
 		const network = await gateway.getNetwork(myChannel);
 		const contract = network.getContract(myChaincodeName);
 
-		console.log('\n--> Evaluate Transaction: query the auction');
+		// Query the auction to get the list of endorsing orgs.
+		// console.log('\n--> Evaluate Transaction: query the auction you want to end');
+		const auctionString = await contract.evaluateTransaction('QueryAuction', auctionID);
+		// console.log('*** Result:  Bid: ' + prettyJSONString(auctionString.toString()));
+		const auctionJSON = JSON.parse(auctionString);
+
+		const statefulTxn = contract.createTransaction('EndAuction');
+
+		if (auctionJSON.organizations.length === 2) {
+			statefulTxn.setEndorsingOrganizations(auctionJSON.organizations[0], auctionJSON.organizations[1]);
+		} else {
+			statefulTxn.setEndorsingOrganizations(auctionJSON.organizations[0]);
+		}
+
+		console.log('\n--> Submit the transaction to end the auction');
+		await statefulTxn.submit(auctionID);
+		console.log('*** Result: committed');
+
+		console.log('\n--> Evaluate Transaction: query the updated auction');
 		const result = await contract.evaluateTransaction('QueryAuction', auctionID);
 		console.log('*** Result: Auction: ' + prettyJSONString(result.toString()));
-		const auctionInfo = prettyJSONString(result.toString());
-		return auctionInfo;
 
 		gateway.disconnect();
 	} catch (error) {
 		console.error(`******** FAILED to submit bid: ${error}`);
+		process.exit(1);
 	}
 }
 
@@ -42,8 +59,6 @@ router.post('/', async function (req, res, next) {
         user: req.body.user,
         auctionID: req.body.auctionID
     }
-	var auctionDetails;
-	
     try {
         const org = auction.org;
         const user = auction.user;
@@ -53,14 +68,14 @@ router.post('/', async function (req, res, next) {
 			const ccp = buildCCPOrg1();
 			const walletPath = path.join(__dirname, 'wallet/org1');
 			const wallet = await buildWallet(Wallets, walletPath);
-			auctionDetails = await queryAuction(ccp, wallet, user, auctionID);
+			await endAuction(ccp, wallet, user, auctionID);
 		} else if (org === 'Org2' || org === 'org2') {
 			const ccp = buildCCPOrg2();
 			const walletPath = path.join(__dirname, 'wallet/org2');
 			const wallet = await buildWallet(Wallets, walletPath);
-			await queryAuction(ccp, wallet, user, auctionID);
+			await endAuction(ccp, wallet, user, auctionID);
 		} else {
-			console.log('Usage: node queryAuction.js org userID auctionID');
+			console.log('Usage: node endAuction.js org userID auctionID');
 			console.log('Org must be Org1 or Org2');
 		}
     } catch (error) {
@@ -68,9 +83,8 @@ router.post('/', async function (req, res, next) {
 	}
 
     res.status(200).json({
-        message: 'success get auction',
-        auctionCreated: auction,
-		auctionDetails: auctionDetails
+        message: 'success end auction',
+        auctionCreated: auction
     });
 });
 

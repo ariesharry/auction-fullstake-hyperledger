@@ -7,7 +7,7 @@ const { buildCCPOrg1, buildCCPOrg2, buildWallet, prettyJSONString } = require('.
 const myChannel = 'mychannel';
 const myChaincodeName = 'auction';
 
-async function queryAuction (ccp, wallet, user, auctionID) {
+async function queryBid (ccp, wallet, user, auctionID, bidID) {
 	try {
 		const gateway = new Gateway();
 		// connect using Discovery enabled
@@ -18,11 +18,9 @@ async function queryAuction (ccp, wallet, user, auctionID) {
 		const network = await gateway.getNetwork(myChannel);
 		const contract = network.getContract(myChaincodeName);
 
-		console.log('\n--> Evaluate Transaction: query the auction');
-		const result = await contract.evaluateTransaction('QueryAuction', auctionID);
-		console.log('*** Result: Auction: ' + prettyJSONString(result.toString()));
-		const auctionInfo = prettyJSONString(result.toString());
-		return auctionInfo;
+		console.log('\n--> Evaluate Transaction: read bid from private data store');
+		const result = await contract.evaluateTransaction('QueryBid', auctionID, bidID);
+		console.log('*** Result: Bid: ' + prettyJSONString(result.toString()));
 
 		gateway.disconnect();
 	} catch (error) {
@@ -40,27 +38,27 @@ router.post('/', async function (req, res, next) {
     const auction ={
         org: req.body.org,
         user: req.body.user,
-        auctionID: req.body.auctionID
+        auctionID: req.body.auctionID,
+        bidID: req.body.bidID
     }
-	var auctionDetails;
-	
     try {
         const org = auction.org;
         const user = auction.user;
         const auctionID = auction.auctionID;
+        const bidID = auction.bidID;
 
         if (org === 'Org1' || org === 'org1') {
 			const ccp = buildCCPOrg1();
 			const walletPath = path.join(__dirname, 'wallet/org1');
 			const wallet = await buildWallet(Wallets, walletPath);
-			auctionDetails = await queryAuction(ccp, wallet, user, auctionID);
+			await queryBid(ccp, wallet, user, auctionID, bidID);
 		} else if (org === 'Org2' || org === 'org2') {
 			const ccp = buildCCPOrg2();
 			const walletPath = path.join(__dirname, 'wallet/org2');
 			const wallet = await buildWallet(Wallets, walletPath);
-			await queryAuction(ccp, wallet, user, auctionID);
+			await queryBid(ccp, wallet, user, auctionID, bidID);
 		} else {
-			console.log('Usage: node queryAuction.js org userID auctionID');
+			console.log('Usage: node bid.js org userID auctionID bidID');
 			console.log('Org must be Org1 or Org2');
 		}
     } catch (error) {
@@ -68,9 +66,8 @@ router.post('/', async function (req, res, next) {
 	}
 
     res.status(200).json({
-        message: 'success get auction',
-        auctionCreated: auction,
-		auctionDetails: auctionDetails
+        message: 'success place bid',
+        auctionCreated: auction
     });
 });
 

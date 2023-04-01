@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { subDays, subHours } from 'date-fns';
-import { Box, Container, Unstable_Grid2 as Grid } from '@mui/material';
+import { Box, Container, Typography, Unstable_Grid2 as Grid } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { OverviewBudget } from 'src/sections/overview/overview-budget';
 import { OverviewLatestOrders } from 'src/sections/overview/overview-latest-orders';
@@ -32,7 +32,11 @@ const Page = () => (
           container
           spacing={3}
         >
-          <Grid
+          <Typography variant="h4">
+            Dashboard
+          </Typography>
+          
+          {/* <Grid
             xs={12}
             sm={6}
             lg={3}
@@ -145,7 +149,7 @@ const Page = () => (
               ]}
               sx={{ height: '100%' }}
             />
-          </Grid>
+          </Grid> */}
           <Grid
             xs={12}
             md={12}

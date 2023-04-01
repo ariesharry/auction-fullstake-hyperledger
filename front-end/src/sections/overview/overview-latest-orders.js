@@ -29,20 +29,20 @@ export const OverviewLatestOrders = (props) => {
 
   return (
     <Card sx={sx}>
-      <CardHeader title="Latest Orders" />
+      <CardHeader title="Crude Palm Oil Auction" />
       <Scrollbar sx={{ flexGrow: 1 }}>
         <Box sx={{ minWidth: 800 }}>
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell>
-                  Order
+                  Auction ID
                 </TableCell>
                 <TableCell>
-                  Customer
+                  Commodity
                 </TableCell>
                 <TableCell sortDirection="desc">
-                  Date
+                  Seller
                 </TableCell>
                 <TableCell>
                   Status

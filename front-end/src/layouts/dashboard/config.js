@@ -31,7 +31,7 @@ export const items = [
   },
   {
     title: 'My Auction',
-    path: '/companies',
+    path: '/myauction',
     icon: (
       <SvgIcon fontSize="small">
         <ShoppingBagIcon />

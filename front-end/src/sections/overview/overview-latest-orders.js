@@ -54,6 +54,8 @@ export const OverviewLatestOrders = (props) => {
     {
       id: 'f69f88012978187a6c12897f',
       ref: 'auction1',
+      seller: 'PTPN',
+      quantity: dataAuction[0]['quantity'],
       amount: 30.5,
       customer: {
         name: dataAuction[0]['item']
@@ -128,9 +130,15 @@ export const OverviewLatestOrders = (props) => {
                 <TableCell>
                   Commodity
                 </TableCell>
-                <TableCell sortDirection="desc">
+                <TableCell>
                   Seller
                 </TableCell>
+                <TableCell>
+                  Quantity
+                </TableCell>
+                {/* <TableCell sortDirection="desc">
+                  Tanggal
+                </TableCell> */}
                 <TableCell>
                   Status
                 </TableCell>
@@ -152,8 +160,14 @@ export const OverviewLatestOrders = (props) => {
                       {order.customer.name}
                     </TableCell>
                     <TableCell>
-                      {createdAt}
+                      {order.seller}
                     </TableCell>
+                    <TableCell>
+                      {order.quantity}
+                    </TableCell>
+                    {/* <TableCell>
+                      {createdAt}
+                    </TableCell> */}
                     <TableCell>
                       <SeverityPill color={statusMap[order.status]}>
                         {order.status}

@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
 import { SeverityPill } from 'src/components/severity-pill';
+import FormDialog from './bid';
 
 const statusMap = {
   pending: 'warning',
@@ -35,7 +36,7 @@ export const OverviewLatestOrders = (props) => {
       try {
         const response = await axios.post('http://localhost:3001/queryAuction', {
           org: 'org1',
-          user: 'ptpn',
+          user: 'PTPN',
           auctionID: 'auction1'
         });
         setData([response.data.auctionDetails]);
@@ -48,70 +49,56 @@ export const OverviewLatestOrders = (props) => {
     fetchData();
   }, [] );
 
-  console.log(dataAuction[0]['item']);
+  // console.log(dataAuction[0]['item']);
 
   const orders = [
     {
-      id: 'f69f88012978187a6c12897f',
-      ref: 'auction1',
+      id: 'auction1',
       seller: 'PTPN',
       quantity: dataAuction[0]['quantity'],
-      amount: 30.5,
-      customer: {
-        name: dataAuction[0]['item']
-      },
+      item: dataAuction[0]['item'],
       createdAt: 1555016400000,
       status: dataAuction[0]['status']
     },
     {
-      id: '9eaa1c7dd4433f413c308ce2',
-      ref: 'DEV1048',
-      amount: 25.1,
-      customer: {
-        name: 'Cao Yu'
-      },
+      id: 'auction2',
+      seller: 'PTPN',
+      quantity: dataAuction[0]['quantity'],
+      item: dataAuction[0]['item'],
       createdAt: 1555016400000,
-      status: 'delivered'
+      status: dataAuction[0]['status']
     },
     {
-      id: '01a5230c811bd04996ce7c13',
-      ref: 'DEV1047',
-      amount: 10.99,
-      customer: {
-        name: 'Alexa Richardson'
-      },
-      createdAt: 1554930000000,
-      status: 'refunded'
+      id: 'auction3',
+      seller: 'PTPN',
+      quantity: dataAuction[0]['quantity'],
+      item: dataAuction[0]['item'],
+      createdAt: 1555016400000,
+      status: dataAuction[0]['status']
     },
     {
-      id: '1f4e1bd0a87cea23cdb83d18',
-      ref: 'DEV1046',
-      amount: 96.43,
-      customer: {
-        name: 'Anje Keizer'
-      },
-      createdAt: 1554757200000,
-      status: 'pending'
+      id: 'auction4',
+      seller: 'PTPN',
+      quantity: dataAuction[0]['quantity'],
+      item: dataAuction[0]['item'],
+      createdAt: 1555016400000,
+      status: dataAuction[0]['status']
     },
     {
-      id: '9f974f239d29ede969367103',
-      ref: 'DEV1045',
-      amount: 32.54,
-      customer: {
-        name: 'Clarke Gillebert'
-      },
-      createdAt: 1554670800000,
-      status: 'delivered'
+      id: 'auction5',
+      seller: 'PTPN',
+      quantity: dataAuction[0]['quantity'],
+      item: dataAuction[0]['item'],
+      createdAt: 1555016400000,
+      status: dataAuction[0]['status']
     },
     {
-      id: 'ffc83c1560ec2f66a1c05596',
-      ref: 'DEV1044',
-      amount: 16.76,
-      customer: {
-        name: 'Adam Denisov'
-      },
-      createdAt: 1554670800000,
-      status: 'delivered'
+      id: 'auction6',
+      seller: 'PTPN',
+      quantity: dataAuction[0]['quantity'],
+      item: dataAuction[0]['item'],
+      createdAt: 1555016400000,
+      status: dataAuction[0]['status']
     }
   ]
   const { sx } = props;
@@ -142,6 +129,9 @@ export const OverviewLatestOrders = (props) => {
                 <TableCell>
                   Status
                 </TableCell>
+                <TableCell>
+                  Action
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -154,10 +144,10 @@ export const OverviewLatestOrders = (props) => {
                     key={order.id}
                   >
                     <TableCell>
-                      {order.ref}
+                      {order.id}
                     </TableCell>
                     <TableCell>
-                      {order.customer.name}
+                      {order.item}
                     </TableCell>
                     <TableCell>
                       {order.seller}
@@ -172,6 +162,9 @@ export const OverviewLatestOrders = (props) => {
                       <SeverityPill color={statusMap[order.status]}>
                         {order.status}
                       </SeverityPill>
+                    </TableCell>
+                    <TableCell>
+                      <FormDialog />
                     </TableCell>
                   </TableRow>
                 );

@@ -41,6 +41,7 @@ const Page = () => (
             lg={12}
           >
             <CustomersSearch />
+            
           </Grid>
           
           {/* <Typography variant="h4">

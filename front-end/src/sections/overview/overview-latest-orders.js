@@ -29,14 +29,21 @@ const statusMap = {
 
 export const OverviewLatestOrders = (props) => {
 
-  const [dataAuction, setData] = useState([]);
+  const [dataAuction, setData] = useState([{
+        id: 'auction1',
+        seller: 'PTPN',
+        quantity: '10000',
+        item: 'CPO',
+        createdAt: 1555016400000,
+        status: 'Open'
+      }]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.post('http://localhost:3001/queryAuction', {
           org: 'org1',
-          user: 'PTPN',
+          user: 'seller',
           auctionID: 'auction1'
         });
         setData([response.data.auctionDetails]);
@@ -51,56 +58,56 @@ export const OverviewLatestOrders = (props) => {
 
   // console.log(dataAuction[0]['item']);
 
-  const orders = [
-    {
-      id: 'auction1',
-      seller: 'PTPN',
-      quantity: dataAuction[0]['quantity'],
-      item: dataAuction[0]['item'],
-      createdAt: 1555016400000,
-      status: dataAuction[0]['status']
-    },
-    {
-      id: 'auction2',
-      seller: 'PTPN',
-      quantity: dataAuction[0]['quantity'],
-      item: dataAuction[0]['item'],
-      createdAt: 1555016400000,
-      status: dataAuction[0]['status']
-    },
-    {
-      id: 'auction3',
-      seller: 'PTPN',
-      quantity: dataAuction[0]['quantity'],
-      item: dataAuction[0]['item'],
-      createdAt: 1555016400000,
-      status: dataAuction[0]['status']
-    },
-    {
-      id: 'auction4',
-      seller: 'PTPN',
-      quantity: dataAuction[0]['quantity'],
-      item: dataAuction[0]['item'],
-      createdAt: 1555016400000,
-      status: dataAuction[0]['status']
-    },
-    {
-      id: 'auction5',
-      seller: 'PTPN',
-      quantity: dataAuction[0]['quantity'],
-      item: dataAuction[0]['item'],
-      createdAt: 1555016400000,
-      status: dataAuction[0]['status']
-    },
-    {
-      id: 'auction6',
-      seller: 'PTPN',
-      quantity: dataAuction[0]['quantity'],
-      item: dataAuction[0]['item'],
-      createdAt: 1555016400000,
-      status: dataAuction[0]['status']
-    }
-  ]
+  // const orders = [
+  //   {
+  //     id: 'auction1',
+  //     seller: 'PTPN',
+  //     quantity: dataAuction[0]['quantity'],
+  //     item: dataAuction[0]['item'],
+  //     createdAt: 1555016400000,
+  //     status: dataAuction[0]['status']
+  //   },
+  //   {
+  //     id: 'auction2',
+  //     seller: 'PTPN',
+  //     quantity: dataAuction[0]['quantity'],
+  //     item: dataAuction[0]['item'],
+  //     createdAt: 1555016400000,
+  //     status: dataAuction[0]['status']
+  //   },
+  //   {
+  //     id: 'auction3',
+  //     seller: 'PTPN',
+  //     quantity: dataAuction[0]['quantity'],
+  //     item: dataAuction[0]['item'],
+  //     createdAt: 1555016400000,
+  //     status: dataAuction[0]['status']
+  //   },
+  //   {
+  //     id: 'auction4',
+  //     seller: 'PTPN',
+  //     quantity: dataAuction[0]['quantity'],
+  //     item: dataAuction[0]['item'],
+  //     createdAt: 1555016400000,
+  //     status: dataAuction[0]['status']
+  //   },
+  //   {
+  //     id: 'auction5',
+  //     seller: 'PTPN',
+  //     quantity: dataAuction[0]['quantity'],
+  //     item: dataAuction[0]['item'],
+  //     createdAt: 1555016400000,
+  //     status: dataAuction[0]['status']
+  //   },
+  //   {
+  //     id: 'auction6',
+  //     seller: 'PTPN',
+  //     quantity: dataAuction[0]['quantity'],
+  //     item: dataAuction[0]['item'],
+  //     createdAt: 1555016400000,
+  //     status: dataAuction[0]['status']
+  //   }
+  // ]
   const { sx } = props;
 
   return (
@@ -135,8 +142,8 @@ export const OverviewLatestOrders = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders.map((order) => {
-                const createdAt = format(order.createdAt, 'dd/MM/yyyy');
+              {dataAuction.map((order) => {
+                // const createdAt = format(order.createdAt, 'dd/MM/yyyy');
 
                 return (
                   <TableRow
@@ -150,7 +157,7 @@ export const OverviewLatestOrders = (props) => {
                       {order.item}
                     </TableCell>
                     <TableCell>
-                      {order.seller}
+                      {order.seller.split(',')[0]}
                     </TableCell>
                     <TableCell>
                       {order.quantity}
@@ -193,6 +200,6 @@ export const OverviewLatestOrders = (props) => {
 };
 
 OverviewLatestOrders.prototype = {
-  orders: PropTypes.array,
+  dataAuction: PropTypes.array,
   sx: PropTypes.object
 };

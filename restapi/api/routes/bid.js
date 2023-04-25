@@ -41,6 +41,7 @@ async function bid (ccp, wallet, user, orgMSP, auctionID, quantity, price) {
 		console.log('\n--> Evaluate Transaction: read the bid that was just created');
 		const result = await contract.evaluateTransaction('QueryBid', auctionID, bidID);
 		console.log('*** Result:  Bid: ' + prettyJSONString(result.toString()));
+		return bidID.toString();
 
 		gateway.disconnect();
 	} catch (error) {
@@ -66,6 +67,9 @@ router.post('/', async function (req, res, next) {
         quantity: req.body.quantity,
         price: req.body.price
     }
+
+	var bidInfo;
+
     try {
         const org = auction.org;
         const user = auction.user;
@@ -78,7 +82,8 @@ router.post('/', async function (req, res, next) {
 			const ccp = buildCCPOrg1();
 			const walletPath = path.join(__dirname, 'wallet/org1');
 			const wallet = await buildWallet(Wallets, walletPath);
-			await bid(ccp, wallet, user, orgMSP, auctionID, quantity, price);
+			bidInfo = await bid(ccp, wallet, user, orgMSP, auctionID, quantity, price);
+			bidInfo = JSON.parse(bidInfo);
 		} else if (org === 'Org2' || org === 'org2') {
 			const orgMSP = 'Org2MSP';
 			const ccp = buildCCPOrg2();
@@ -95,7 +100,8 @@ router.post('/', async function (req, res, next) {
 
     res.status(200).json({
         message: 'success place bid',
-        auctionCreated: auction
+        auctionCreated: auction,
+		bidDetails: bidInfo
     });
 });
 

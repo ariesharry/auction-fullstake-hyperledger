@@ -41,11 +41,18 @@ const states = [
 
 export const CommodityForm = () => {
   const [values, setValues] = useState({
-    org: '',
-    user: '',
-    auctionID: '',
-    item: '',
-    quantity: 0
+    issuer: '',
+    id: '',
+    issueDate: '',
+    maturityDate: '',
+    quantity: '',
+    commodity: '',
+    lotNumber: '',
+    quality: '',
+    producer: '',
+    certification: '',
+    portOfLoading: '',
+    deliveryConditions: ''
   });
 
   const Alert = React.forwardRef(function Alert(props, ref) {

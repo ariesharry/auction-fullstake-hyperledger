@@ -10,7 +10,7 @@ const CommercialPaper = require('../contract/lib/paper.js');
 
 router.post('/', async function (req, res, next) {
 
-    const wallet = await Wallets.newFileSystemWallet('../../identity/user/isabella/wallet');
+    const wallet = await Wallets.newFileSystemWallet('./identity/user/isabella/wallet');
 
     // A gateway defines the peers used to access Fabric networks
     const gateway = new Gateway();
@@ -30,7 +30,7 @@ router.post('/', async function (req, res, next) {
         deliveryConditions: req.body.deliveryConditions
     }
     try {
-        const issuer = auction.org;
+        const issuer = auction.issuer;
         const id = auction.id;
         const issueDate = auction.issueDate;
         const maturityDate = auction.maturityDate;
@@ -48,7 +48,7 @@ router.post('/', async function (req, res, next) {
         const userName = 'isabella';
 
         // Load connection profile; will be used to locate a gateway
-        let connectionProfile = yaml.safeLoad(fs.readFileSync('../gateway/connection-org2.yaml', 'utf8'));
+        let connectionProfile = yaml.safeLoad(fs.readFileSync('./api/gateway/connection-org2.yaml', 'utf8'));
 
         // Set connection options; identity and wallet
         let connectionOptions = {
@@ -91,7 +91,7 @@ router.post('/', async function (req, res, next) {
 	}
 
     res.status(200).json({
-        message: 'success add new auction',
+        message: 'success add new commodity',
         auctionCreated: auction
     });
 });

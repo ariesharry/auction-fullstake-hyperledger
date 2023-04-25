@@ -11,6 +11,7 @@ const queryBid =  require('./api/routes/queryBid');
 const revealBid = require('./api/routes/revealBid');
 const closeAuction = require('./api/routes/closeAuction');
 const endAuction =  require('./api/routes/endAuction');
+const addCommodity = require('./api/routes/addCommodity');
 const { application } = require('express');
 
 app.use(morgan('dev'));
@@ -39,6 +40,7 @@ app.use('/submitBid', submitBid);
 app.use('/revealBid', revealBid);
 app.use('/closeAuction', closeAuction);
 app.use('/endAuction', endAuction);
+app.use('/addCommodity', addCommodity);
 
 
 app.use((req, res, next) => {

@@ -14,7 +14,7 @@ const cpState = {
     ISSUED: 1,
     PENDING: 2,
     TRADING: 3,
-    REDEEMED: 4
+    DELIVERED: 4
 };
 
 /**
@@ -67,7 +67,7 @@ class CommercialPaper extends State {
     }
 
     setRedeemed() {
-        this.currentState = cpState.REDEEMED;
+        this.currentState = cpState.DELIVERED;
     }
 
     setPending() {
@@ -83,7 +83,7 @@ class CommercialPaper extends State {
     }
 
     isRedeemed() {
-        return this.currentState === cpState.REDEEMED;
+        return this.currentState === cpState.DELIVERED;
     }
 
     isPending() {

@@ -90,16 +90,22 @@ export const CommodityForm = () => {
     []
   );
 
-  const addAuction = (e) => {
+  const addCommodity = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3001/auction', {
-      org: values.org,
-      user: values.user,
-      auctionID: values.auctionID,
-      item: values.item,
+    axios.post('http://localhost:3001/addCommodity', {
+      issuer: values.issuer,
+      id: values.id,
+      issueDate: values.issueDate,
+      maturityDate: values.maturityDate,
       quantity: values.quantity,
-      auditor: "withAuditor"
-    }).then(res => console.log("adding new auction", res)).catch(err => console.log(err));
+      commodity: values.commodity,
+      lotNumber: values.lotNumber,
+      quality: values.quality,
+      producer: values.producer,
+      certification: values.certification,
+      portOfLoading: values.portOfLoading,
+      deliveryConditions: values.deliveryConditions
+    }).then(res => console.log("adding new commodity", res)).catch(err => console.log(err));
     handleClick();
   };
 
@@ -155,7 +161,7 @@ export const CommodityForm = () => {
                   name="issuer"
                   onChange={handleChange}
                   required
-                  value={values.item}
+                  // value={values.item}
                 />
               </Grid>
 
@@ -169,7 +175,7 @@ export const CommodityForm = () => {
                   name="id"
                   onChange={handleChange}
                   required
-                  value={values.item}
+                  // value={values.item}
                 />
               </Grid>
 
@@ -183,7 +189,7 @@ export const CommodityForm = () => {
                   name="quanity"
                   onChange={handleChange}
                   required
-                  value={values.org}
+                  // value={values.org}
                 />
               </Grid>
               <Grid
@@ -196,7 +202,7 @@ export const CommodityForm = () => {
                   name="issueDate"
                   onChange={handleChange}
                   required
-                  value={values.user}
+                  // value={values.user}
                 />
               </Grid>
 
@@ -210,7 +216,7 @@ export const CommodityForm = () => {
                   name="maturityDate"
                   onChange={handleChange}
                   required
-                  value={values.user}
+                  // value={values.user}
                 />
               </Grid>
               
@@ -274,7 +280,7 @@ export const CommodityForm = () => {
                   name="portOfLoading"
                   onChange={handleChange}
                   required
-                  value= "IDR"
+                  // value= "IDR"
                 />
               </Grid>
               <Grid
@@ -323,7 +329,7 @@ export const CommodityForm = () => {
           <Button
           variant="contained"
           loading={true}
-          onClick={addAuction}>
+          onClick={addCommodity}>
             Add Asset Commodity
           </Button>
           <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

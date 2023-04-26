@@ -180,7 +180,7 @@ class QueryUtils {
                                     jsonRes.Value.currentState = 'TRADING';
                                     break;
                                 case 4:
-                                    jsonRes.Value.currentState = 'REDEEMED';
+                                    jsonRes.Value.currentState = 'DELIVERED';
                                     break;
                                 default: // else, unknown named query
                                     jsonRes.Value.currentState = 'UNKNOWN';

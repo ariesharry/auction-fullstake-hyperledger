@@ -60,15 +60,22 @@ class CommercialPaperContract extends Contract {
      *
      * @param {Context} ctx the transaction context
      * @param {String} issuer commercial paper issuer
-     * @param {Integer} paperNumber paper number for this issuer
+     * @param {Integer} id paper number for this issuer
      * @param {String} issueDateTime paper issue date
      * @param {String} maturityDateTime paper maturity date
-     * @param {Integer} faceValue face value of paper
+     * @param {Integer} quantity face value of paper
+     * @param {String} commodity
+     * @param {String} lotNumber
+     * @param {String} quality
+     * @param {String} producer
+     * @param {String} certification
+     * @param {String} portOfLoading
+     * @param {String} deliveryConditions
     */
-    async issue(ctx, issuer, paperNumber, issueDateTime, maturityDateTime, faceValue) {
+    async issue(ctx, issuer, id, issueDateTime, maturityDateTime, quantity, commodity, lotNumber, quality, producer, certification, portOfLoading, deliveryConditions) {
 
         // create an instance of the paper
-        let paper = CommercialPaper.createInstance(issuer, paperNumber, issueDateTime, maturityDateTime, parseInt(faceValue));
+        let paper = CommercialPaper.createInstance(issuer, id, issueDateTime, maturityDateTime, parseInt(quantity), commodity, lotNumber, quality, producer, certification, portOfLoading, deliveryConditions);
 
         // Smart contract, rather than paper, moves paper into ISSUED state
         paper.setIssued();
@@ -92,21 +99,21 @@ class CommercialPaperContract extends Contract {
      *
       * @param {Context} ctx the transaction context
       * @param {String} issuer commercial paper issuer
-      * @param {Integer} paperNumber paper number for this issuer
+      * @param {Integer} id paper number for this issuer
       * @param {String} currentOwner current owner of paper
       * @param {String} newOwner new owner of paper
       * @param {Integer} price price paid for this paper // transaction input - not written to asset
       * @param {String} purchaseDateTime time paper was purchased (i.e. traded)  // transaction input - not written to asset
      */
-    async buy(ctx, issuer, paperNumber, currentOwner, newOwner, price, purchaseDateTime) {
+    async buy(ctx, issuer, id, currentOwner, newOwner, price, purchaseDateTime) {
 
         // Retrieve the current paper using key fields provided
-        let paperKey = CommercialPaper.makeKey([issuer, paperNumber]);
+        let paperKey = CommercialPaper.makeKey([issuer, id]);
         let paper = await ctx.paperList.getPaper(paperKey);
 
         // Validate current owner
         if (paper.getOwner() !== currentOwner) {
-            throw new Error('\nPaper ' + issuer + paperNumber + ' is not owned by ' + currentOwner);
+            throw new Error('\nPaper ' + issuer + id + ' is not owned by ' + currentOwner);
         }
 
         // First buy moves state from ISSUED to TRADING (when running )
@@ -121,7 +128,7 @@ class CommercialPaperContract extends Contract {
             let mspid = ctx.clientIdentity.getMSPID();
             paper.setOwnerMSP(mspid);
         } else {
-            throw new Error('\nPaper ' + issuer + paperNumber + ' is not trading. Current state = ' + paper.getCurrentState());
+            throw new Error('\nPaper ' + issuer + id + ' is not trading. Current state = ' + paper.getCurrentState());
         }
 
         // Update the paper
@@ -136,22 +143,22 @@ class CommercialPaperContract extends Contract {
       * 
       * @param {Context} ctx the transaction context
       * @param {String} issuer commercial paper issuer
-      * @param {Integer} paperNumber paper number for this issuer
+      * @param {Integer} id paper number for this issuer
       * @param {String} currentOwner current owner of paper
       * @param {String} newOwner new owner of paper                              // transaction input - not written to asset per se - but written to block
       * @param {Integer} price price paid for this paper                         // transaction input - not written to asset per se - but written to block
       * @param {String} purchaseDateTime time paper was requested                // transaction input - ditto.
      */
-    async buy_request(ctx, issuer, paperNumber, currentOwner, newOwner, price, purchaseDateTime) {
+    async buy_request(ctx, issuer, id, currentOwner, newOwner, price, purchaseDateTime) {
         
 
         // Retrieve the current paper using key fields provided
-        let paperKey = CommercialPaper.makeKey([issuer, paperNumber]);
+        let paperKey = CommercialPaper.makeKey([issuer, id]);
         let paper = await ctx.paperList.getPaper(paperKey);
 
         // Validate current owner - this is really information for the user trying the sample, rather than any 'authorisation' check per se FYI
         if (paper.getOwner() !== currentOwner) {
-            throw new Error('\nPaper ' + issuer + paperNumber + ' is not owned by ' + currentOwner + ' provided as a paraneter');
+            throw new Error('\nPaper ' + issuer + id + ' is not owned by ' + currentOwner + ' provided as a paraneter');
         }
         // paper set to 'PENDING' - can only be transferred (confirmed) by identity from owning org (MSP check).
         paper.setPending();
@@ -168,26 +175,26 @@ class CommercialPaperContract extends Contract {
      *
      * @param {Context} ctx the transaction context
      * @param {String} issuer commercial paper issuer
-     * @param {Integer} paperNumber paper number for this issuer
+     * @param {Integer} id paper number for this issuer
      * @param {String} newOwner new owner of paper
      * @param {String} newOwnerMSP  MSP id of the transferee
      * @param {String} confirmDateTime  confirmed transfer date.
     */
-    async transfer(ctx, issuer, paperNumber, newOwner, newOwnerMSP, confirmDateTime) {
+    async transfer(ctx, issuer, id, newOwner, newOwnerMSP, confirmDateTime) {
 
         // Retrieve the current paper using key fields provided
-        let paperKey = CommercialPaper.makeKey([issuer, paperNumber]);
+        let paperKey = CommercialPaper.makeKey([issuer, id]);
         let paper = await ctx.paperList.getPaper(paperKey);
 
         // Validate current owner's MSP in the paper === invoking transferor's MSP id - can only transfer if you are the owning org.
 
         if (paper.getOwnerMSP() !== ctx.clientIdentity.getMSPID()) {
-            throw new Error('\nPaper ' + issuer + paperNumber + ' is not owned by the current invoking Organisation, and not authorised to transfer');
+            throw new Error('\nPaper ' + issuer + id + ' is not owned by the current invoking Organisation, and not authorised to transfer');
         }
 
         // Paper needs to be 'pending' - which means you need to have run 'buy_pending' transaction first.
         if ( ! paper.isPending()) {
-            throw new Error('\nPaper ' + issuer + paperNumber + ' is not currently in state: PENDING for transfer to occur: \n must run buy_request transaction first');
+            throw new Error('\nPaper ' + issuer + id + ' is not currently in state: PENDING for transfer to occur: \n must run buy_request transaction first');
         }
         // else all good
 
@@ -207,26 +214,26 @@ class CommercialPaperContract extends Contract {
      *
      * @param {Context} ctx the transaction context
      * @param {String} issuer commercial paper issuer
-     * @param {Integer} paperNumber paper number for this issuer
+     * @param {Integer} id paper number for this issuer
      * @param {String} redeemingOwner redeeming owner of paper
      * @param {String} issuingOwnerMSP the MSP of the org that the paper will be redeemed with.
      * @param {String} redeemDateTime time paper was redeemed
     */
-    async redeem(ctx, issuer, paperNumber, redeemingOwner, issuingOwnerMSP, redeemDateTime) {
+    async redeem(ctx, issuer, id, redeemingOwner, issuingOwnerMSP, redeemDateTime) {
 
-        let paperKey = CommercialPaper.makeKey([issuer, paperNumber]);
+        let paperKey = CommercialPaper.makeKey([issuer, id]);
 
         let paper = await ctx.paperList.getPaper(paperKey);
 
         // Check paper is not alread in a state of REDEEMED
         if (paper.isRedeemed()) {
-            throw new Error('\nPaper ' + issuer + paperNumber + ' has already been redeemed');
+            throw new Error('\nPaper ' + issuer + id + ' has already been delivered');
         }
 
         // Validate current redeemer's MSP matches the invoking redeemer's MSP id - can only redeem if you are the owning org.
 
         if (paper.getOwnerMSP() !== ctx.clientIdentity.getMSPID()) {
-            throw new Error('\nPaper ' + issuer + paperNumber + ' cannot be redeemed by ' + ctx.clientIdentity.getMSPID() + ', as it is not the authorised owning Organisation');
+            throw new Error('\nPaper ' + issuer + id + ' cannot be redeemed by ' + ctx.clientIdentity.getMSPID() + ', as it is not the authorised owning Organisation');
         }
 
         // As this is just a sample, can show additional verification check: that the redeemer provided matches that on record, before redeeming it
@@ -236,7 +243,7 @@ class CommercialPaperContract extends Contract {
             paper.setRedeemed();
             paper.redeemDateTime = redeemDateTime; // record redemption date against the asset (the complement to 'issue date')
         } else {
-            throw new Error('\nRedeeming owner: ' + redeemingOwner + ' organisation does not currently own paper: ' + issuer + paperNumber);
+            throw new Error('\nRedeeming owner: ' + redeemingOwner + ' organisation does not currently own paper: ' + issuer + id);
         }
 
         await ctx.paperList.updatePaper(paper);
@@ -249,14 +256,14 @@ class CommercialPaperContract extends Contract {
      * Query history of a commercial paper
      * @param {Context} ctx the transaction context
      * @param {String} issuer commercial paper issuer
-     * @param {Integer} paperNumber paper number for this issuer
+     * @param {Integer} id paper number for this issuer
     */
-    async queryHistory(ctx, issuer, paperNumber) {
+    async queryHistory(ctx, issuer, id) {
 
         // Get a key to be used for History query
 
         let query = new QueryUtils(ctx, 'org.papernet.paper');
-        let results = await query.getAssetHistory(issuer, paperNumber); // (cpKey);
+        let results = await query.getAssetHistory(issuer, id); // (cpKey);
         return results;
 
     }
@@ -290,8 +297,8 @@ class CommercialPaperContract extends Contract {
     /**
     * queryAdHoc commercial paper - supply a custom mango query
     * eg - as supplied as a param:     
-    * ex1:  ["{\"selector\":{\"faceValue\":{\"$lt\":8000000}}}"]
-    * ex2:  ["{\"selector\":{\"faceValue\":{\"$gt\":4999999}}}"]
+    * ex1:  ["{\"selector\":{\"quantity\":{\"$lt\":8000000}}}"]
+    * ex2:  ["{\"selector\":{\"quantity\":{\"$gt\":4999999}}}"]
     * 
     * @param {Context} ctx the transaction context
     * @param {String} queryString querystring
@@ -314,15 +321,18 @@ class CommercialPaperContract extends Contract {
     async queryNamed(ctx, queryname) {
         let querySelector = {};
         switch (queryname) {
-            case "redeemed":
+            case "delivered":
                 querySelector = { "selector": { "currentState": 4 } };  // 4 = redeemd state
+                break;
+            case "issued":
+                querySelector = { "selector": { "currentState": 1 } };  // 1 = issued state
                 break;
             case "trading":
                 querySelector = { "selector": { "currentState": 3 } };  // 3 = trading state
                 break;
             case "value":
                 // may change to provide as a param - fixed value for now in this sample
-                querySelector = { "selector": { "faceValue": { "$gt": 4000000 } } };  // to test, issue CommPapers with faceValue <= or => this figure.
+                querySelector = { "selector": { "quantity": { "$gt": 100 } } };  // to test, issue CommPapers with quantity <= or => this figure.
                 break;
             default: // else, unknown named query
                 throw new Error('invalid named query supplied: ' + queryname + '- please try again ');

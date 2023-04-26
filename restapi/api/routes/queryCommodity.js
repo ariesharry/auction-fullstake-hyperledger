@@ -75,7 +75,7 @@ router.post('/', async function (req, res, next) {
         // issue commercial paper
         console.log('Submit commercial paper issue transaction.');
 
-        const issueResponse = await contract.submitTransaction('issue', issuer, id, issueDate, maturityDate, quantity, commodity, lotNumber, quality, producer, certification, portOfLoading, deliveryConditions);
+        let issueResponse = await contract.evaluateTransaction('queryNamed', 'value');
 
         // process response
         console.log('Process issue transaction response.'+issueResponse);

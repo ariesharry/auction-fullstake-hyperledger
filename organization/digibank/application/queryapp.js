@@ -107,13 +107,13 @@ async function main() {
         // 4 Named query - all redeemed papers
         console.log('4. Named Query: ... All papers in org.papernet.papers that are in current state of redeemed');
         console.log('-----------------------------------------------------------------------------------------\n');
-        let queryResponse4 = await contract.evaluateTransaction('queryNamed', 'redeemed');
+        let queryResponse4 = await contract.evaluateTransaction('queryNamed', 'trading');
 
         json = JSON.parse(queryResponse4.toString());
         console.log(json);
         console.log('\n\n');
 
-        console.log('\n  Named query "redeemed" complete.');
+        console.log('\n  Named query "trading" complete.');
         console.log('-----------------------------------------------------------------------------------------\n\n');
 
 

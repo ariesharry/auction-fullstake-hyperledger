@@ -164,7 +164,7 @@ export const CommodityList = (props) => {
                       </SeverityPill>
                     </TableCell>
                     <TableCell>
-                      <FormDialog />
+                      <FormDialog keyValue = {order.issuer} idValue = {order.id}/>
                     </TableCell>
                   </TableRow>
                 );

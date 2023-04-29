@@ -13,7 +13,7 @@ import axios from 'axios';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
-export default function FormDialog() {
+export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
 
   const [data, setData] = useState([
@@ -86,11 +86,11 @@ export default function FormDialog() {
   //   fetchData();
   // }, [] );
   
-  const addCommodity = (e) => {
+  const addCommodity = () => {
     // e.preventDefault();
     axios.post('http://103.250.10.234:3001/queryCommodityId', {
-      key: 'PTPN IV',
-      id: '00002'
+      key: props.keyValue,
+      id: props.idValue
     }).then(res => setData([res.data.auctionCreated])).catch(err => console.log(err));
   };
 

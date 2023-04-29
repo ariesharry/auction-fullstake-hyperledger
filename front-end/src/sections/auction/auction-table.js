@@ -1,60 +1,123 @@
-import PropTypes from 'prop-types';
 import { format } from 'date-fns';
+import PropTypes from 'prop-types';
+import ArrowRightIcon from '@heroicons/react/24/solid/ArrowRightIcon';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
-  Avatar,
   Box,
+  Button,
   Card,
-  Checkbox,
-  Stack,
+  CardActions,
+  CardHeader,
+  Divider,
+  SvgIcon,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TablePagination,
-  TableRow,
-  Typography
+  TableRow
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
-import { getInitials } from 'src/utils/get-initials';
+import { SeverityPill } from 'src/components/severity-pill';
+import FormDialog from './bid';
 
-export const CustomersTable = (props) => {
-  const {
-    count = 0,
-    items = [],
-    onDeselectAll,
-    onDeselectOne,
-    onPageChange = () => {},
-    onRowsPerPageChange,
-    onSelectAll,
-    onSelectOne,
-    page = 0,
-    rowsPerPage = 0,
-    selected = []
-  } = props;
+const statusMap = {
+  pending: 'warning',
+  delivered: 'success',
+  refunded: 'error'
+};
 
-  const selectedSome = (selected.length > 0) && (selected.length < items.length);
-  const selectedAll = (items.length > 0) && (selected.length === items.length);
+export const CommodityList = (props) => {
+
+  const [dataAuction, setData] = useState([{
+        id: 'auction1',
+        seller: 'PTPN',
+        quantity: '10000',
+        item: 'CPO',
+        createdAt: 1555016400000,
+        status: 'Open'
+      }]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post('http://103.250.10.234:3001/queryAuction', {
+          org: 'org1',
+          user: 'seller',
+          auctionID: 'auction1'
+        });
+        setData([response.data.auctionDetails]);
+        // console.log(auctionData);
+        // console.log(auctionData.item);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, [] );
+
+  // console.log(dataAuction[0]['item']);
+
+  // const orders = [
+  //   {
+  //     id: 'auction1',
+  //     seller: 'PTPN',
+  //     quantity: dataAuction[0]['quantity'],
+  //     item: dataAuction[0]['item'],
+  //     createdAt: 1555016400000,
+  //     status: dataAuction[0]['status']
+  //   },
+  //   {
+  //     id: 'auction2',
+  //     seller: 'PTPN',
+  //     quantity: dataAuction[0]['quantity'],
+  //     item: dataAuction[0]['item'],
+  //     createdAt: 1555016400000,
+  //     status: dataAuction[0]['status']
+  //   },
+  //   {
+  //     id: 'auction3',
+  //     seller: 'PTPN',
+  //     quantity: dataAuction[0]['quantity'],
+  //     item: dataAuction[0]['item'],
+  //     createdAt: 1555016400000,
+  //     status: dataAuction[0]['status']
+  //   },
+  //   {
+  //     id: 'auction4',
+  //     seller: 'PTPN',
+  //     quantity: dataAuction[0]['quantity'],
+  //     item: dataAuction[0]['item'],
+  //     createdAt: 1555016400000,
+  //     status: dataAuction[0]['status']
+  //   },
+  //   {
+  //     id: 'auction5',
+  //     seller: 'PTPN',
+  //     quantity: dataAuction[0]['quantity'],
+  //     item: dataAuction[0]['item'],
+  //     createdAt: 1555016400000,
+  //     status: dataAuction[0]['status']
+  //   },
+  //   {
+  //     id: 'auction6',
+  //     seller: 'PTPN',
+  //     quantity: dataAuction[0]['quantity'],
+  //     item: dataAuction[0]['item'],
+  //     createdAt: 1555016400000,
+  //     status: dataAuction[0]['status']
+  //   }
+  // ]
+  const { sx } = props;
 
   return (
-    <Card>
-      <Scrollbar>
+    <Card sx={sx}>
+      <CardHeader title="Crude Palm Oil Auction" />
+      <Scrollbar sx={{ flexGrow: 1 }}>
         <Box sx={{ minWidth: 800 }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedAll}
-                    indeterminate={selectedSome}
-                    onChange={(event) => {
-                      if (event.target.checked) {
-                        onSelectAll?.();
-                      } else {
-                        onDeselectAll?.();
-                      }
-                    }}
-                  />
-                </TableCell>
                 <TableCell>
                   Auction ID
                 </TableCell>
@@ -67,62 +130,48 @@ export const CustomersTable = (props) => {
                 <TableCell>
                   Quantity
                 </TableCell>
-                <TableCell>
-                  Price
-                </TableCell>
+                {/* <TableCell sortDirection="desc">
+                  Tanggal
+                </TableCell> */}
                 <TableCell>
                   Status
+                </TableCell>
+                <TableCell>
+                  Action
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((customer) => {
-                const isSelected = selected.includes(customer.id);
-                const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
+              {dataAuction.map((order) => {
+                // const createdAt = format(order.createdAt, 'dd/MM/yyyy');
 
                 return (
                   <TableRow
                     hover
-                    key={customer.id}
-                    selected={isSelected}
+                    key={order.id}
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        onChange={(event) => {
-                          if (event.target.checked) {
-                            onSelectOne?.(customer.id);
-                          } else {
-                            onDeselectOne?.(customer.id);
-                          }
-                        }}
-                      />
+                    <TableCell>
+                      {order.objectType}
                     </TableCell>
                     <TableCell>
-                      <Stack
-                        alignItems="center"
-                        direction="row"
-                        spacing={2}
-                      >
-                        <Typography variant="subtitle2">
-                          {customer.name}
-                        </Typography>
-                      </Stack>
+                      {order.item}
                     </TableCell>
                     <TableCell>
-                      {customer.email}
+                      {order.seller.split(',')[0]}
                     </TableCell>
                     <TableCell>
-                      {customer.address.city}, {customer.address.state}, {customer.address.country}
+                      {order.quantity}
                     </TableCell>
-                    <TableCell>
-                      {customer.phone}
-                    </TableCell>
-                    <TableCell>
+                    {/* <TableCell>
                       {createdAt}
+                    </TableCell> */}
+                    <TableCell>
+                      <SeverityPill color={statusMap[order.status]}>
+                        {order.status}
+                      </SeverityPill>
                     </TableCell>
                     <TableCell>
-                      {createdAt}
+                      <FormDialog />
                     </TableCell>
                   </TableRow>
                 );
@@ -131,29 +180,26 @@ export const CustomersTable = (props) => {
           </Table>
         </Box>
       </Scrollbar>
-      <TablePagination
-        component="div"
-        count={count}
-        onPageChange={onPageChange}
-        onRowsPerPageChange={onRowsPerPageChange}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[5, 10, 25]}
-      />
+      <Divider />
+      <CardActions sx={{ justifyContent: 'flex-end' }}>
+        <Button
+          color="inherit"
+          endIcon={(
+            <SvgIcon fontSize="small">
+              <ArrowRightIcon />
+            </SvgIcon>
+          )}
+          size="small"
+          variant="text"
+        >
+          View all
+        </Button>
+      </CardActions>
     </Card>
   );
 };
 
-CustomersTable.propTypes = {
-  count: PropTypes.number,
-  items: PropTypes.array,
-  onDeselectAll: PropTypes.func,
-  onDeselectOne: PropTypes.func,
-  onPageChange: PropTypes.func,
-  onRowsPerPageChange: PropTypes.func,
-  onSelectAll: PropTypes.func,
-  onSelectOne: PropTypes.func,
-  page: PropTypes.number,
-  rowsPerPage: PropTypes.number,
-  selected: PropTypes.array
+CommodityList.prototype = {
+  dataAuction: PropTypes.array,
+  sx: PropTypes.object
 };

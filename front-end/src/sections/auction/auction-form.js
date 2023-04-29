@@ -80,7 +80,7 @@ export const CommodityForm = () => {
 
   const addAuction = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3001/auction', {
+    axios.post('http://103.250.10.234:3001/auction', {
       org: values.org,
       user: values.user,
       auctionID: values.auctionID,

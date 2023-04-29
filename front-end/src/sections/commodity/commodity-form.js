@@ -92,7 +92,7 @@ export const CommodityForm = () => {
 
   const addCommodity = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3001/addCommodity', {
+    axios.post('http://103.250.10.234:3001/addCommodity', {
       issuer: values.issuer,
       id: values.id,
       issueDate: values.issueDate,
@@ -141,12 +141,12 @@ export const CommodityForm = () => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={commodity}
+                    value={values.commodity}
                     label="Commodity"
                     name='commodity'
-                    onChange={handleChangeCommodity}
+                    onChange={handleChange}
                   >
-                    <MenuItem value={1}>Crude Palm Oil</MenuItem>
+                    <MenuItem value={"CPO"}>CPO</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -186,7 +186,7 @@ export const CommodityForm = () => {
                 <TextField
                   fullWidth
                   label="Quantity"
-                  name="quanity"
+                  name="quantity"
                   onChange={handleChange}
                   required
                   // value={values.org}
@@ -297,30 +297,6 @@ export const CommodityForm = () => {
                 />
               </Grid>
               
-              {/* <Grid
-                xs={12}
-                md={6}
-              >
-                <TextField
-                  fullWidth
-                  label="Select State"
-                  name="state"
-                  onChange={handleChange}
-                  required
-                  select
-                  SelectProps={{ native: true }}
-                  value={values.state}
-                >
-                  {states.map((option) => (
-                    <option
-                      key={option.value}
-                      value={option.value}
-                    >
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
-              </Grid> */}
             </Grid>
           </Box>
         </CardContent>

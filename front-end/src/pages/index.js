@@ -11,10 +11,11 @@ import { OverviewTotalCustomers } from 'src/sections/overview/overview-total-cus
 import { OverviewTotalProfit } from 'src/sections/overview/overview-total-profit';
 import { OverviewTraffic } from 'src/sections/overview/overview-traffic';
 import { CustomersSearch } from 'src/sections/commodity/customers-search';
+import { ChartComponent } from 'src/components/chart-tv';
 
 const now = new Date();
 
-const Page = () => (
+const Page = (props) => (
   
   <>
     <Head>
@@ -58,7 +59,7 @@ const Page = () => (
             />
           </Grid>
           
-          <Grid
+          {/* <Grid
             xs={12}
             sm={6}
             lg={3}
@@ -101,20 +102,17 @@ const Page = () => (
               sx={{ height: '100%' }}
               value="$15k"
             />
-          </Grid>
+          </Grid> */}
           <Grid
             xs={12}
             lg={8}
           >
+            {/* <ChartComponent {...props} data={initialData}></ChartComponent> */}
             <OverviewSales
               chartSeries={[
                 {
                   name: 'This year',
                   data: [18, 16, 5, 8, 3, 14, 14, 16, 17, 19, 18, 20]
-                },
-                {
-                  name: 'Last year',
-                  data: [12, 11, 4, 6, 2, 9, 9, 10, 11, 12, 13, 13]
                 }
               ]}
               sx={{ height: '100%' }}

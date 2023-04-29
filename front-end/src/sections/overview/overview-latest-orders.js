@@ -41,10 +41,10 @@ export const OverviewLatestOrders = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post('http://localhost:3001/queryAuction', {
+        const response = await axios.post('http://103.250.10.234:3001/queryAuction', {
           org: 'org1',
           user: 'seller',
-          auctionID: 'auction1'
+          auctionID: '00001'
         });
         setData([response.data.auctionDetails]);
         // console.log(auctionData);
@@ -151,7 +151,7 @@ export const OverviewLatestOrders = (props) => {
                     key={order.id}
                   >
                     <TableCell>
-                      {order.id}
+                      {order.objectType}
                     </TableCell>
                     <TableCell>
                       {order.item}

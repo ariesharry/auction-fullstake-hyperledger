@@ -75,8 +75,8 @@ export const items = [
     )
   },
   {
-    title: 'PKS Profile',
-    path: '/404',
+    title: 'Explorer',
+    path: '/explorer',
     icon: (
       <SvgIcon fontSize="small">
         <BuildingOffice2Icon />

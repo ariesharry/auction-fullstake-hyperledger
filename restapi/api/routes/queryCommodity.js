@@ -16,32 +16,11 @@ router.post('/', async function (req, res, next) {
     const gateway = new Gateway();
 
     const auction ={
-        issuer: req.body.issuer,
-        id: req.body.id,
-        issueDate: req.body.issueDate,
-        maturityDate: req.body.maturityDate,
-        quantity: req.body.quantity,
-        commodity: req.body.commodity,
-        lotNumber: req.body.lotNumber,
-        quality: req.body.quality,
-        producer: req.body.producer,
-        certification: req.body.certification,
-        portOfLoading: req.body.portOfLoading,
-        deliveryConditions: req.body.deliveryConditions
+        query: req.body.query
     }
+    let paper = '1';
     try {
-        const issuer = auction.issuer;
-        const id = auction.id;
-        const issueDate = auction.issueDate;
-        const maturityDate = auction.maturityDate;
-        const quantity = auction.quantity;
-        const commodity = auction.commodity;
-        const lotNumber = auction.lotNumber;
-        const quality = auction.quality;
-        const producer = auction.producer;
-        const certification = auction.certification;
-        const portOfLoading = auction.portOfLoading;
-        const deliveryConditions = auction.deliveryConditions;
+        const query = auction.query;
 
         // Specify userName for network access
         // const userName = 'isabella.issuer@magnetocorp.com';
@@ -75,12 +54,12 @@ router.post('/', async function (req, res, next) {
         // issue commercial paper
         console.log('Submit commercial paper issue transaction.');
 
-        let issueResponse = await contract.evaluateTransaction('queryNamed', 'value');
+        issueResponse = await contract.evaluateTransaction('queryNamed', query);
 
         // process response
         console.log('Process issue transaction response.'+issueResponse);
 
-        let paper = CommercialPaper.fromBuffer(issueResponse);
+        paper = CommercialPaper.fromBuffer(issueResponse);
 
         console.log(`${paper.issuer} commercial paper : ${paper.id} successfully issued for value ${paper.quantity}`);
         console.log('Transaction complete.');
@@ -92,7 +71,7 @@ router.post('/', async function (req, res, next) {
 
     res.status(200).json({
         message: 'success add new commodity',
-        auctionCreated: auction
+        auctionCreated: paper
     });
 });
 

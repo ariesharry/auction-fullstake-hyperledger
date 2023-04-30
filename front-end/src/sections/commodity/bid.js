@@ -12,9 +12,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import MuiAlert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
+  const [openAlert, setOpenAlert] = React.useState(false);
 
   const [data, setData] = useState([
     {
@@ -94,6 +97,13 @@ export default function FormDialog(props) {
     }).then(res => setData([res.data.auctionCreated])).catch(err => console.log(err));
   };
 
+  const handleClickAlert = () => {
+    setOpenAlert(true);
+  };
+
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -103,6 +113,24 @@ export default function FormDialog(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const addAuction = (e) => {
+    e.preventDefault();
+    axios.post('http://103.250.10.234:3001/auction', {
+      org: "org1",
+      user: "seller",
+      auctionID: dataAuction[0].id,
+      item: dataAuction[0].commodity,
+      quantity: dataAuction[0].quantity,
+      auditor: "withAuditor"
+    }).then(res => console.log("adding new auction", res)).catch(err => console.log(err));
+    handleClickAlert();
+  };
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
 
   return (
     <div>
@@ -132,8 +160,13 @@ export default function FormDialog(props) {
         
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="contained" onClick={handleClose}>Open Auction</Button>
+          <Button variant="contained" onClick={addAuction}>Open Auction</Button>
         </DialogActions>
+        <Snackbar open={openAlert} autoHideDuration={6000} onClose={function(event){handleClose(); handleCloseAlert()}}>
+          <Alert onClose={function(event){handleClose(); handleCloseAlert()}} severity="success" sx={{ width: '100%' }}>
+            Successfully added a new auction!
+          </Alert>
+        </Snackbar>
       </Dialog>
     </div>
   );

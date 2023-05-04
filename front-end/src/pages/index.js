@@ -13,7 +13,7 @@ import { OverviewTraffic } from 'src/sections/overview/overview-traffic';
 import { CustomersSearch } from 'src/sections/commodity/customers-search';
 import { ChartComponent } from 'src/components/chart-tv';
 import { TotalSupplyChart } from 'src/sections/overview/total-supply';
-import { HistoryAsset } from 'src/components/timeline';
+import HistoryAsset from 'src/components/timeline';
 
 const now = new Date();
 

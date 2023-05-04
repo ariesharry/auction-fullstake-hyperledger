@@ -13,6 +13,7 @@ import { OverviewTraffic } from 'src/sections/overview/overview-traffic';
 import { CustomersSearch } from 'src/sections/commodity/customers-search';
 import { ChartComponent } from 'src/components/chart-tv';
 import { TotalSupplyChart } from 'src/sections/overview/total-supply';
+import { HistoryAsset } from 'src/components/timeline';
 
 const now = new Date();
 
@@ -123,6 +124,14 @@ const Page = (props) => (
           <Grid
             xs={12}
             lg={4}
+          >
+          
+            <HistoryAsset />
+          </Grid>
+
+          <Grid
+            xs={12}
+            lg={8}
           >
             {/* <ChartComponent {...props} data={initialData}></ChartComponent> */}
             <TotalSupplyChart

@@ -12,6 +12,7 @@ import { OverviewTotalProfit } from 'src/sections/overview/overview-total-profit
 import { OverviewTraffic } from 'src/sections/overview/overview-traffic';
 import { CustomersSearch } from 'src/sections/commodity/customers-search';
 import { ChartComponent } from 'src/components/chart-tv';
+import { TotalSupplyChart } from 'src/sections/overview/total-supply';
 
 const now = new Date();
 
@@ -118,6 +119,23 @@ const Page = (props) => (
               sx={{ height: '100%' }}
             />
           </Grid>
+
+          <Grid
+            xs={12}
+            lg={4}
+          >
+            {/* <ChartComponent {...props} data={initialData}></ChartComponent> */}
+            <TotalSupplyChart
+              chartSeries={[
+                {
+                  name: 'This year',
+                  data: [18, 16, 5, 8, 3, 14, 14, 16, 17, 19, 18, 20]
+                }
+              ]}
+              sx={{ height: '100%' }}
+            />
+          </Grid>
+
           <Grid
             xs={12}
             md={6}

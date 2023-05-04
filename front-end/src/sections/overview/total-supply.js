@@ -74,18 +74,18 @@ const useChartOptions = () => {
         show: true
       },
       categories: [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec'
+        '2023-03-22',
+        '2023-03-23',
+        '2023-03-24',
+        '2023-03-25',
+        '2023-03-26',
+        '2023-03-27',
+        '2023-03-28',
+        '2023-03-29',
+        '2023-03-30',
+        '2023-04-01',
+        '2023-04-02',
+        '2023-04-03'
       ],
       labels: {
         offsetY: 5,
@@ -106,21 +106,21 @@ const useChartOptions = () => {
   };
 };
 
-export const OverviewSales = (props) => {
+export const TotalSupplyChart = (props) => {
   const { chartSeries, sx } = props;
   const chartOptions = useChartOptions();
 
   const initialData = [
-    { time: '2023-03-22', value: 11520 },
-    { time: '2023-03-23', value: 11610 },
-    { time: '2023-03-24', value: 11770 },
-    { time: '2023-03-25', value: 11670 },
-    { time: '2023-03-26', value: 11550 },
-    { time: '2023-03-27', value: 11480 },
-    { time: '2023-03-28', value: 11525 },
-    { time: '2023-03-29', value: 11423 },
-    { time: '2023-03-30', value: 11622 },
-    { time: '2023-03-31', value: 11922 },
+    { time: '2023-03-22', value: 32.51 },
+    { time: '2023-03-22', value: 31.11 },
+    { time: '2018-12-24', value: 27.02 },
+    { time: '2018-12-25', value: 27.32 },
+    { time: '2018-12-26', value: 25.17 },
+    { time: '2018-12-27', value: 28.89 },
+    { time: '2018-12-28', value: 25.46 },
+    { time: '2018-12-29', value: 23.92 },
+    { time: '2018-12-30', value: 22.68 },
+    { time: '2018-12-31', value: 22.67 },
   ];
   
   return (
@@ -139,17 +139,17 @@ export const OverviewSales = (props) => {
             Sync
           </Button>
         )}
-        title="CPO Price"
+        title="Total CPO Supply"
       />
       <CardContent>
-        <ChartComponent {...props} data={initialData}></ChartComponent>
-        {/* <Chart
+        {/* <ChartComponent {...props} data={initialData}></ChartComponent> */}
+        <Chart
           height={350}
           options={chartOptions}
           series={chartSeries}
           type="bar"
           width="100%"
-        /> */}
+        />
       </CardContent>
       <Divider />
       <CardActions sx={{ justifyContent: 'flex-end' }}>
@@ -169,7 +169,7 @@ export const OverviewSales = (props) => {
   );
 };
 
-OverviewSales.protoTypes = {
+TotalSupplyChart.protoTypes = {
   chartSeries: PropTypes.array.isRequired,
   sx: PropTypes.object
 };

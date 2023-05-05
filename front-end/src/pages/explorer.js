@@ -11,6 +11,8 @@ import { OverviewTotalCustomers } from 'src/sections/overview/overview-total-cus
 import { OverviewTotalProfit } from 'src/sections/overview/overview-total-profit';
 import { OverviewTraffic } from 'src/sections/overview/overview-traffic';
 import { ExplorerSearch } from 'src/sections/explorer/explorer-search';
+import { HistoryAsset } from 'src/sections/explorer/history-asset';
+import DetailsCommodity from 'src/sections/explorer/details-commodity';
 
 const now = new Date();
 
@@ -41,6 +43,24 @@ const Page = () => (
             lg={12}
           >
             <ExplorerSearch />
+            
+          </Grid>
+
+          <Grid
+            xs={12}
+            md={12}
+            lg={6}
+          >
+            <DetailsCommodity />
+            
+          </Grid>
+
+          <Grid
+            xs={12}
+            md={12}
+            lg={12}
+          >
+            <HistoryAsset />
             
           </Grid>
           

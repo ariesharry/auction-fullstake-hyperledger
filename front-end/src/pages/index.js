@@ -125,14 +125,6 @@ const Page = (props) => (
             xs={12}
             lg={4}
           >
-          
-            <HistoryAsset />
-          </Grid>
-
-          <Grid
-            xs={12}
-            lg={8}
-          >
             {/* <ChartComponent {...props} data={initialData}></ChartComponent> */}
             <TotalSupplyChart
               chartSeries={[

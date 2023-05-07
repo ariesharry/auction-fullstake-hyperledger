@@ -1,18 +1,10 @@
 import Head from 'next/head';
 import { subDays, subHours } from 'date-fns';
-import { Box, Container, Typography, Unstable_Grid2 as Grid } from '@mui/material';
+import { Button, Card, InputAdornment, OutlinedInput, SvgIcon, Box, Container, Typography, Unstable_Grid2 as Grid } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { OverviewBudget } from 'src/sections/overview/overview-budget';
-import { OverviewLatestOrders } from 'src/sections/overview/overview-latest-orders';
-import { OverviewLatestProducts } from 'src/sections/overview/overview-latest-products';
-import { OverviewSales } from 'src/sections/overview/overview-sales';
-import { OverviewTasksProgress } from 'src/sections/overview/overview-tasks-progress';
-import { OverviewTotalCustomers } from 'src/sections/overview/overview-total-customers';
-import { OverviewTotalProfit } from 'src/sections/overview/overview-total-profit';
-import { OverviewTraffic } from 'src/sections/overview/overview-traffic';
-import { ExplorerSearch } from 'src/sections/explorer/explorer-search';
 import { HistoryAsset } from 'src/sections/explorer/history-asset';
 import DetailsCommodity from 'src/sections/explorer/details-commodity';
+import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
 
 const now = new Date();
 
@@ -42,14 +34,40 @@ const Page = () => (
             md={12}
             lg={12}
           >
-            <ExplorerSearch />
+            <Card sx={{ p: 4 }}>
+              <Grid
+                item xs={12}
+              >
+                <OutlinedInput
+                  defaultValue=""
+                  fullWidth
+                  placeholder="Trace Asset Commodity"
+                  startAdornment={(
+                    <InputAdornment position="start">
+                      <SvgIcon
+                        color="action"
+                        fontSize="small"
+                      >
+                        <MagnifyingGlassIcon />
+                      </SvgIcon>
+                    </InputAdornment>
+                  )} 
+                />
+              </Grid>
+              <Grid
+                item xs={4}
+                >
+                  <Button variant="contained" size="large">Trace</Button>
+              </Grid>
             
+            
+          </Card>            
           </Grid>
 
           <Grid
             xs={12}
             md={12}
-            lg={6}
+            lg={7}
           >
             <DetailsCommodity />
             
@@ -58,7 +76,7 @@ const Page = () => (
           <Grid
             xs={12}
             md={12}
-            lg={12}
+            lg={5}
           >
             <HistoryAsset />
             

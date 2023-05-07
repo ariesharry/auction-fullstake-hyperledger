@@ -95,10 +95,10 @@ export default function FormDialog() {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Bid
+        Details
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Bid</DialogTitle>
+        <DialogTitle>Details</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Input your bid (quantity and price),<br></br>

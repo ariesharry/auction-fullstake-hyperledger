@@ -28,39 +28,43 @@ export const HistoryAsset = () => (
         mode="left"
         items={[
           {
-            label: '2015-09-01',
+            label: '2023-05-01',
             children: (
               <>
-                <p>Solve initial network problems 1</p>
-                <p>Solve initial network problems 2</p>
-                <p>Solve initial network problems 3</p>
+                <p>Status: ISSUED</p>
+                <p>Commodity: CPO</p>
+                <p>Quantity: 10000</p>
+                <p>Owner: Seller</p>
               </>
             )},
           {
-            label: '2015-09-01',
+            label: '2023-05-03',
             children: (
               <>
-                <p>Solve initial network problems 1</p>
-                <p>Solve initial network problems 2</p>
-                <p>Solve initial network problems 3</p>
+                <p>Status: TRADING</p>
+                <p>Commodity: CPO</p>
+                <p>Quantity: 5000</p>
+                <p>Owner: Bidder1</p>
               </>
             )},
           {
-            label: '2015-09-01',
+            label: '2023-05-03',
             children: (
               <>
-                <p>Solve initial network problems 1</p>
-                <p>Solve initial network problems 2</p>
-                <p>Solve initial network problems 3</p>
+                <p>Status: TRADING</p>
+                <p>Commodity: CPO</p>
+                <p>Quantity: 5000</p>
+                <p>Owner: Bidder2</p>
               </>
             )},
           {
-            label: '2015-09-01',
+            label: '2023-05-14',
             children: (
               <>
-                <p>Solve initial network problems 1</p>
-                <p>Solve initial network problems 2</p>
-                <p>Solve initial network problems 3</p>
+                <p>Status: DELIVERED</p>
+                <p>Commodity: CPO</p>
+                <p>Quantity: 10000</p>
+                <p>Owner: Bidder1, Bidder2</p>
               </>
             )},
         ]}

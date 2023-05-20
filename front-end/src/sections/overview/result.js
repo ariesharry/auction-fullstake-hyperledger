@@ -6,8 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { InputAdornment } from '@mui/material';
-import { Descriptions } from 'antd';
+import { InputAdornment, TableCell, TableHead, TableRow, TableBody } from '@mui/material';
+import { Descriptions, Table } from 'antd';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -15,7 +15,7 @@ import Checkbox from '@mui/material/Checkbox';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
-export default function FormDialog() {
+export default function AuctionResult() {
   const [open, setOpen] = React.useState(false);
   const [openAlert, setOpenAlert] = React.useState(false);
   const [openAlertSubmit, setOpenAlertSubmit] = React.useState(false);
@@ -92,85 +92,55 @@ export default function FormDialog() {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
+  function createData(auctionId, winner, quantity, price) {
+    return { auctionId, winner, quantity, price };
+  };
+  const rows = [
+    createData('00013', 'Sinarmas', 3000, 11900),
+    createData('00013', 'Wilmar', 2500, 11800),
+    createData('00013', 'PHPO', 2000, 11700),
+    createData('00013', 'Nagamas', 2500, 11600),
+  ];
+
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Details
+      <Button variant="contained" onClick={handleClickOpen}>
+        Result
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Details</DialogTitle>
+        <DialogTitle>Auction Result</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Input your bid (quantity and price),<br></br>
-            Note: Once you have submitted your bid, it cannot be changed 
-          </DialogContentText>
-          <DialogContentText>
-          <br></br>
-            <b>Total supply:</b> 10000 Ton <br></br>
-            <b>Quality:</b> Grade A (ALB 3.51% sd 5% dan M+I 0.5%)
-          </DialogContentText>
-          <br></br>
-          <TextField
-          label="Price"
-          id="price"
-          name='price'
-          type="number"
-          sx={{ m: 1, width: '25ch' }}
-          variant="outlined"
-          required
-          InputProps={{
-            startAdornment: <InputAdornment position="start">Rp</InputAdornment>,
-          }}
-        />
-          <TextField
-          label="Quantity"
-          id="quantity"
-          name='quantity'
-          type="number"
-          sx={{ m: 1, width: '25ch' }}
-          variant="outlined"
-          defaultValue="500"
-          required
-          InputProps={{
-            endAdornment: <InputAdornment position="end">Ton</InputAdornment>,
-          }}
-        />
-        
-          {/* <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Quantity"
-            type="number"
-            fullWidth
-            variant="outlined"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Price"
-            type="number"
-            fullWidth
-            variant="standard"
-          /> */}
+        <Descriptions title="Auction Results" layout="vertical" bordered column={4}>
+          <Descriptions.Item label="Auction ID"> 
+            <p>0001</p>
+            <p>0001</p>
+            <p>0001</p>
+            <p>0001</p>
+          </Descriptions.Item>
+          <Descriptions.Item label="___Winner">
+            <p>Sinarmas</p>
+            <p>Wilmar</p>
+            <p>PHPO</p>
+            <p>Nagamas</p>
+          </Descriptions.Item>
+          <Descriptions.Item label="Quantity">
+            <p>3000</p>
+            <p>2500</p>
+            <p>2000</p>
+            <p>2500</p>
+          </Descriptions.Item>
+          <Descriptions.Item label="Price__">
+            <p>11900</p>
+            <p>11800</p>
+            <p>11700</p>
+            <p>11600</p>
+          </Descriptions.Item>
+        </Descriptions>
+          
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="outlined" onClick={handleClickAlert}>Place Bid</Button>
-          <Button variant="contained" onClick={submitBid}>Submit Bid</Button>
-          
+          <Button onClick={handleClose}>Close</Button> 
         </DialogActions>
-        <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>
-          <Alert onClose={handleCloseAlert} severity="success" sx={{ width: '100%' }}>
-            Successfully place bid!
-          </Alert>
-        </Snackbar>
-        <Snackbar open={openAlertSubmit} autoHideDuration={6000} onClose={function(event){handleClose(); handleCloseAlertSubmit()}}>
-          <Alert onClose={function(event){handleClose(); handleCloseAlertSubmit()}} severity="success" sx={{ width: '100%' }}>
-            Successfully submit auction!
-          </Alert>
-        </Snackbar>
       </Dialog>
     </div>
   );

@@ -28,7 +28,7 @@ export default function DetailsCommodity(props) {
         }}
       >
         <Descriptions.Item label="Issuer"> { props.dataAuction[0].issuer } </Descriptions.Item>
-        <Descriptions.Item label="Owner"> { props.dataAuction[0].owner } </Descriptions.Item>
+        <Descriptions.Item label="Owner"> Sinarmas, Wilmar, PHPO, Nagamas </Descriptions.Item>
         <Descriptions.Item label="Id"> { props.dataAuction[0].id } </Descriptions.Item>
         <Descriptions.Item label="Issue Date"> { props.dataAuction[0].issueDateTime } </Descriptions.Item>
         <Descriptions.Item label="Maturity Date"> { props.dataAuction[0].maturityDateTime } </Descriptions.Item>
@@ -40,7 +40,7 @@ export default function DetailsCommodity(props) {
         <Descriptions.Item label="Certification"> { props.dataAuction[0].certification } </Descriptions.Item>
         <Descriptions.Item label="Port of Loading"> { props.dataAuction[0].portOfLoading } </Descriptions.Item>
         <Descriptions.Item label="Delivery Conditions"> { props.dataAuction[0].deliveryConditions } </Descriptions.Item>
-        <Descriptions.Item label="Status"> { props.dataAuction[0].currentState } </Descriptions.Item>
+        <Descriptions.Item label="Status"> TRADING </Descriptions.Item>
       </Descriptions>
     </Card>
   );

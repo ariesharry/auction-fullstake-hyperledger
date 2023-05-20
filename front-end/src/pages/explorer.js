@@ -66,7 +66,7 @@ const Page = () => {
   const queryHistoryCommodity = () => {
     // e.preventDefault();
     axios.post('http://103.250.10.234:3001/queryCommodityId', {
-      key: "MagnetoCorp",
+      key: "PTPN",
       id: values.id
     }).then(res => setData([res.data.auctionCreated])).catch(err => console.log(err));
   };

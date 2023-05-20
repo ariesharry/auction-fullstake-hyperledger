@@ -71,13 +71,13 @@ export const SideNav = (props) => {
                 color="inherit"
                 variant="subtitle1"
               >
-                Aries
+                Bidder1
               </Typography>
               <Typography
                 color="neutral.400"
                 variant="body2"
               >
-                Seller
+                Buyer
               </Typography>
             </div>
             <SvgIcon

@@ -28,45 +28,55 @@ export const HistoryAsset = () => (
         mode="left"
         items={[
           {
-            label: '2023-05-01',
+            label: '07-05-2023',
             children: (
               <>
                 <p>Status: ISSUED</p>
                 <p>Commodity: CPO</p>
                 <p>Quantity: 10000</p>
-                <p>Owner: Seller</p>
+                <p>Owner: PTPN</p>
               </>
             )},
           {
-            label: '2023-05-03',
+            label: '07-05-2023',
             children: (
               <>
                 <p>Status: TRADING</p>
                 <p>Commodity: CPO</p>
-                <p>Quantity: 5000</p>
-                <p>Owner: Bidder1</p>
+                <p>Quantity: 3000</p>
+                <p>Owner: bidder1</p>
               </>
             )},
           {
-            label: '2023-05-03',
+            label: '07-05-2023',
             children: (
               <>
                 <p>Status: TRADING</p>
                 <p>Commodity: CPO</p>
-                <p>Quantity: 5000</p>
-                <p>Owner: Bidder2</p>
+                <p>Quantity: 2500</p>
+                <p>Owner: bidder2</p>
               </>
             )},
           {
-            label: '2023-05-14',
+            label: '07-05-2023',
             children: (
               <>
-                <p>Status: DELIVERED</p>
+                <p>Status: TRADING</p>
                 <p>Commodity: CPO</p>
-                <p>Quantity: 10000</p>
-                <p>Owner: Bidder1, Bidder2</p>
+                <p>Quantity: 2000</p>
+                <p>Owner: bidder4</p>
               </>
             )},
+            {
+              label: '07-05-2023',
+              children: (
+                <>
+                  <p>Status: TRADING</p>
+                  <p>Commodity: CPO</p>
+                  <p>Quantity: 2500</p>
+                  <p>Owner: bidder13</p>
+                </>
+              )},
         ]}
       />
   </Card>

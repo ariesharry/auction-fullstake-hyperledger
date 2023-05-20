@@ -4,7 +4,7 @@ import ArrowRightIcon from '@heroicons/react/24/solid/ArrowRightIcon';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-  Box,
+  Box, Grid,
   Button,
   Card,
   CardActions,
@@ -20,22 +20,23 @@ import {
 import { Scrollbar } from 'src/components/scrollbar';
 import { SeverityPill } from 'src/components/severity-pill';
 import FormDialog from './bid';
+import AuctionResult from './result';
 
 const statusMap = {
-  pending: 'warning',
-  delivered: 'success',
-  refunded: 'error'
+  open: 'warning',
+  closed: 'success',
+  ended: 'error'
 };
 
 export const OverviewLatestOrders = (props) => {
 
   const [dataAuction, setData] = useState([{
-        id: 'auction1',
-        seller: 'PTPN',
-        quantity: '10000',
-        item: 'CPO',
-        createdAt: 1555016400000,
-        status: 'Open'
+        id: '',
+        seller: '',
+        quantity: '',
+        item: '',
+        createdAt: '',
+        status: ''
       }]);
 
   useEffect(() => {
@@ -44,7 +45,7 @@ export const OverviewLatestOrders = (props) => {
         const response = await axios.post('http://103.250.10.234:3001/queryAuction', {
           org: 'org1',
           user: 'seller',
-          auctionID: '00001'
+          auctionID: '00013'
         });
         setData([response.data.auctionDetails]);
         // console.log(auctionData);
@@ -167,11 +168,14 @@ export const OverviewLatestOrders = (props) => {
                     </TableCell> */}
                     <TableCell>
                       <SeverityPill color={statusMap[order.status]}>
-                        {order.status}
+                        ended
                       </SeverityPill>
                     </TableCell>
                     <TableCell>
+
                       <FormDialog />
+                      <br></br>
+                      <AuctionResult />
                     </TableCell>
                   </TableRow>
                 );

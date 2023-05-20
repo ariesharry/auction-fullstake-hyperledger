@@ -148,7 +148,7 @@ export default function FormDialog() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="outlined" onClick={addBid}>Place Bid Bid</Button>
+          <Button variant="outlined" onClick={addBid}>Place Bid</Button>
           <Button variant="contained" onClick={submitBid}>Submit Bid</Button>
           
         </DialogActions>

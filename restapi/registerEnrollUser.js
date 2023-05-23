@@ -6,9 +6,14 @@
 
 'use strict';
 
+const { Utils: utils } = require('fabric-common');
+const path=require('path');
+let config=utils.getConfig()
+config.file(path.resolve(__dirname,'config.json'))
+
 const { Wallets } = require('fabric-network');
 const FabricCAServices = require('fabric-ca-client');
-const path = require('path');
+// const path = require('path');
 const { buildCAClient, registerAndEnrollUser } = require('../../test-application/javascript/CAUtil.js');
 const { buildCCPOrg1, buildCCPOrg2, buildWallet } = require('../../test-application/javascript/AppUtil.js');
 

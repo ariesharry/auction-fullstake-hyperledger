@@ -31,12 +31,12 @@ const statusMap = {
 export const OverviewLatestOrders = (props) => {
 
   const [dataAuction, setData] = useState([{
-        id: '',
-        seller: '',
-        quantity: '',
-        item: '',
-        createdAt: '',
-        status: ''
+        id: 'null',
+        seller: 'null',
+        quantity: 'null',
+        item: 'null',
+        createdAt: 'null',
+        status: 'null'
       }]);
 
   useEffect(() => {
@@ -44,8 +44,8 @@ export const OverviewLatestOrders = (props) => {
       try {
         const response = await axios.post('http://103.250.10.234:3001/queryAuction', {
           org: 'org1',
-          user: 'seller',
-          auctionID: '00013'
+          user: 'ptpn5',
+          auctionID: '0001'
         });
         setData([response.data.auctionDetails]);
         // console.log(auctionData);
@@ -152,7 +152,7 @@ export const OverviewLatestOrders = (props) => {
                     key={order.id}
                   >
                     <TableCell>
-                      {order.objectType}
+                      0001
                     </TableCell>
                     <TableCell>
                       {order.item}
@@ -168,7 +168,7 @@ export const OverviewLatestOrders = (props) => {
                     </TableCell> */}
                     <TableCell>
                       <SeverityPill color={statusMap[order.status]}>
-                        ended
+                        {order.status}
                       </SeverityPill>
                     </TableCell>
                     <TableCell>

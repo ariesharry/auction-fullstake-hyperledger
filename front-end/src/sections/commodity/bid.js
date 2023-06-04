@@ -22,12 +22,12 @@ export default function FormDialog(props) {
     {
       
           0: {
-            TxId:"001",
+            TxId:"null",
             Value: {
-                  commodity: "CPO",
-                  id: "0004",  
-                  owner: "KPBN",
-                  quantity: 10000
+                  commodity: "null",
+                  id: "null",  
+                  owner: "null",
+                  quantity: "null"
               }
           },
           class: "org.papernet.commercialpaper",
@@ -91,9 +91,11 @@ export default function FormDialog(props) {
   const addCommodity = () => {
     // e.preventDefault();
     axios.post('http://103.250.10.234:3001/queryCommodityId', {
-      key: props.keyValue,
-      id: props.idValue
-    }).then(res => setData([res.data.auctionCreated])).catch(err => console.log(err));
+    org: "org1",
+    user: "ptpn5",
+    key: props.keyValue,
+    id: props.idValue
+    }).then(res => setData([res.data.result])).catch(err => console.log(err));
   };
 
   const handleClickAlert = () => {
@@ -117,7 +119,7 @@ export default function FormDialog(props) {
     e.preventDefault();
     axios.post('http://103.250.10.234:3001/auction', {
       org: "org1",
-      user: "seller",
+      user: "ptpn5",
       auctionID: dataAuction[0].id,
       item: dataAuction[0].commodity,
       quantity: dataAuction[0].quantity,

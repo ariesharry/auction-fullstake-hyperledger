@@ -33,12 +33,12 @@ export const CommodityList = (props) => {
     {
       
           0: {
-              Key:"001",
+              Key:"null",
               Record: {
-                  commodity: "CPO",
-                  id: "0004",  
-                  owner: "KPBN",
-                  quantity: 10000
+                  commodity: "null",
+                  id: "null",  
+                  owner: "null",
+                  quantity: "null"
               }
           },
           class: "org.papernet.commercialpaper",
@@ -87,10 +87,12 @@ export const CommodityList = (props) => {
     const fetchData = async () => {
       try {
         const response = await axios.post('http://103.250.10.234:3001/queryCommodity', {
-          query: 'value'
+        org: 'org1',
+        user: 'ptpn5',  
+        query: 'value'
         });
-        setData([response.data.auctionCreated]);
-        // console.log(auctionData);
+        setData([response.data.result]);
+        console.log(response.data.result);
         // console.log(auctionData.item);
       } catch (error) {
         console.error(error);

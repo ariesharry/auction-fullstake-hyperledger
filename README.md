@@ -2,6 +2,8 @@
 
 Welcome to the IBEA System GitHub repository! This repository contains the source code for the IBEA System, which stands for Integrated Blockchain-ERP-Based Auction. 
 
+![IBEA System](ibea-system.png)
+
 ## Introduction
 
 The IBEA System is a sophisticated auction platform that leverages the power of blockchain technology and enterprise resource planning (ERP) systems. It provides a secure and transparent environment for conducting auctions, ensuring fairness, efficiency, and trust.

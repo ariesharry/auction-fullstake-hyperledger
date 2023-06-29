@@ -3,7 +3,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import * as React from 'react';
@@ -108,6 +108,44 @@ export const CommodityForm = () => {
     }).then(res => console.log("adding new commodity", res)).catch(err => console.log(err));
     handleClick();
   };
+
+  // const addCommodity = (e) => {
+  //   e.preventDefault();
+  //   axios.post('https://7dfc-114-124-131-9.ngrok-free.app/vit_api/create/profile.production_history', {
+  //     name: values.commodity,
+  //     date: values.issueDate,
+  //     volume: values.quantity,
+  //     production_id: 1
+  //   }).then(res => console.log("adding sales history to Odoo", res)).catch(err => console.log(err));
+  //   handleClick();
+  // };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          'https://7dfc-114-124-131-9.ngrok-free.app/vit_api/create/profile.production_history', {
+            name: "CPO",
+            date: "2020-01-04",
+            volume: 70,
+            production_id: 1
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data[0]);
+          setValues(data[0]);
+        } else {
+          throw new Error('Error fetching data from the API');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [open]);
 
   const [commodity, setCommodity] = React.useState('');
 

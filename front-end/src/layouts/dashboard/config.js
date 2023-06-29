@@ -39,6 +39,33 @@ export const items = [
     )
   },
   {
+    title: 'Explorer',
+    path: '/explorer',
+    icon: (
+      <SvgIcon fontSize="small">
+        <BuildingOffice2Icon />
+      </SvgIcon>
+    )
+  },
+  {
+    title: 'PKS Profile',
+    path: '/pksprofile',
+    icon: (
+      <SvgIcon fontSize="small">
+        <BuildingOffice2Icon />
+      </SvgIcon>
+    )
+  },
+  {
+    title: 'Material Flow',
+    path: '/materialflow',
+    icon: (
+      <SvgIcon fontSize="small">
+        <BuildingOffice2Icon />
+      </SvgIcon>
+    )
+  },
+  {
     title: 'Account',
     path: '/account',
     icon: (
@@ -71,15 +98,6 @@ export const items = [
     icon: (
       <SvgIcon fontSize="small">
         <UserPlusIcon />
-      </SvgIcon>
-    )
-  },
-  {
-    title: 'Explorer',
-    path: '/explorer',
-    icon: (
-      <SvgIcon fontSize="small">
-        <BuildingOffice2Icon />
       </SvgIcon>
     )
   }

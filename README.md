@@ -29,7 +29,7 @@ The IBEA System is protected by copyright. Unauthorized use, distribution, or mo
 
 ## Contact
 
-For any questions or inquiries about the IBEA System, please contact the author at [email protected]
+For any questions or inquiries about the IBEA System, please contact the author at ariesharry3@gmail.com
 
 Thank you for your interest in the IBEA System! We look forward to your contributions and feedback.
 

@@ -19,16 +19,18 @@ const Page = () => {
     {
       
           0: {
-            TxId:"001",
+            TxId:"0001",
             Value: {
                   
               }
           },
           class: "org.papernet.commercialpaper",
-          key: ":",
-          currentState: null
+          key: "null",
+          currentState: "null"
     }
   ]);
+
+  console.log(data);
 
   const updatedData = data.map(obj => {
     delete obj.key;
@@ -66,9 +68,11 @@ const Page = () => {
   const queryHistoryCommodity = () => {
     // e.preventDefault();
     axios.post('http://103.250.10.234:3001/queryCommodityId', {
+      org: "org1",
+      user: "ptpn5",
       key: "PTPN",
       id: values.id
-    }).then(res => setData([res.data.auctionCreated])).catch(err => console.log(err));
+    }).then(res => setData([res.data.result])).catch(err => console.log(err));
   };
 
   const handleChange = useCallback(

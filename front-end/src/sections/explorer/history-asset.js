@@ -33,7 +33,7 @@ export const HistoryAsset = () => (
               <>
                 <p>Status: ISSUED</p>
                 <p>Commodity: CPO</p>
-                <p>Quantity: 10000</p>
+                <p>Quantity: 2000</p>
                 <p>Owner: PTPN</p>
               </>
             )},
@@ -43,8 +43,8 @@ export const HistoryAsset = () => (
               <>
                 <p>Status: TRADING</p>
                 <p>Commodity: CPO</p>
-                <p>Quantity: 3000</p>
-                <p>Owner: bidder1</p>
+                <p>Quantity: 500</p>
+                <p>Owner: Sinarmas</p>
               </>
             )},
           {
@@ -53,8 +53,8 @@ export const HistoryAsset = () => (
               <>
                 <p>Status: TRADING</p>
                 <p>Commodity: CPO</p>
-                <p>Quantity: 2500</p>
-                <p>Owner: bidder2</p>
+                <p>Quantity: 500</p>
+                <p>Owner: Wilmar</p>
               </>
             )},
           {
@@ -63,20 +63,11 @@ export const HistoryAsset = () => (
               <>
                 <p>Status: TRADING</p>
                 <p>Commodity: CPO</p>
-                <p>Quantity: 2000</p>
-                <p>Owner: bidder4</p>
+                <p>Quantity: 1000</p>
+                <p>Owner: PHPO</p>
               </>
             )},
-            {
-              label: '07-05-2023',
-              children: (
-                <>
-                  <p>Status: TRADING</p>
-                  <p>Commodity: CPO</p>
-                  <p>Quantity: 2500</p>
-                  <p>Owner: bidder13</p>
-                </>
-              )},
+        
         ]}
       />
   </Card>

@@ -28,7 +28,7 @@ export default function DetailsCommodity(props) {
         }}
       >
         <Descriptions.Item label="Issuer"> { props.dataAuction[0].issuer } </Descriptions.Item>
-        <Descriptions.Item label="Owner"> Sinarmas, Wilmar, PHPO, Nagamas </Descriptions.Item>
+        <Descriptions.Item label="Owner"> Sinarmas, Wilmar, PHPO </Descriptions.Item>
         <Descriptions.Item label="Id"> { props.dataAuction[0].id } </Descriptions.Item>
         <Descriptions.Item label="Issue Date"> { props.dataAuction[0].issueDateTime } </Descriptions.Item>
         <Descriptions.Item label="Maturity Date"> { props.dataAuction[0].maturityDateTime } </Descriptions.Item>

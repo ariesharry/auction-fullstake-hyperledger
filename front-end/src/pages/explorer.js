@@ -8,6 +8,8 @@ import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
 import { useState, useCallback } from 'react';
 import axios from 'axios';
 import Fade from '@mui/material/Fade';
+import { OverviewLatestOrders } from 'src/sections/overview/overview-latest-orders';
+import { BidHistory } from 'src/sections/explorer/history-bid';
 
 
 const Page = () => {
@@ -158,6 +160,26 @@ const Page = () => {
             lg={7}
           >
             <DetailsCommodity dataAuction = {dataAuction} />  
+          </Grid>
+          </Fade>
+
+          <Fade in={checked}>
+          <Grid
+            xs={12}
+            md={12}
+            lg={7}
+          >
+            <OverviewLatestOrders />  
+          </Grid>
+          </Fade>
+
+          <Fade in={checked}>
+          <Grid
+            xs={12}
+            md={12}
+            lg={7}
+          >
+            <BidHistory />  
           </Grid>
           </Fade>
 

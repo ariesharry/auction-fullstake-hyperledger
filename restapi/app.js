@@ -14,6 +14,7 @@ const endAuction =  require('./api/routes/endAuction');
 const addCommodity = require('./api/routes/addCommodity');
 const queryCommodity = require('./api/routes/queryCommodity');
 const queryCommodityId = require('./api/routes/queryCommodityId');
+const queryAuctionAll  = require('./api/routes/queryAuctionAll');
 const { application } = require('express');
 
 app.use(morgan('dev'));
@@ -45,6 +46,7 @@ app.use('/endAuction', endAuction);
 app.use('/addCommodity', addCommodity);
 app.use('/queryCommodity', queryCommodity);
 app.use('/queryCommodityId', queryCommodityId);
+app.use('/queryAuctionAll', queryAuctionAll);
 
 
 app.use((req, res, next) => {

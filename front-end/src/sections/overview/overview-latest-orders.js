@@ -31,24 +31,24 @@ const statusMap = {
 export const OverviewLatestOrders = (props) => {
 
   const [dataAuction, setData] = useState([{
-        id: 'null',
+        auctionID: 'null',
         seller: 'null',
         quantity: 'null',
         item: 'null',
         createdAt: 'null',
         status: 'null'
       }]);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post('http://103.250.10.234:3001/queryAuction', {
+        const response = await axios.post('http://20.5.96.89:3001/queryAuctionAll', {
           org: 'org1',
-          user: 'ptpn5',
-          auctionID: '0001'
+          user: 'PTPN4',
+          status: 'open'
         });
-        setData([response.data.auctionDetails]);
-        // console.log(auctionData);
+        setData(response.data.auctionDetails);
+        console.log(response.data.auctionDetails);
         // console.log(auctionData.item);
       } catch (error) {
         console.error(error);
@@ -56,6 +56,24 @@ export const OverviewLatestOrders = (props) => {
     };
     fetchData();
   }, [] );
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.post('http://103.250.10.234:3001/queryAuction', {
+  //         org: 'org1',
+  //         user: 'ptpn5',
+  //         auctionID: '0001'
+  //       });
+  //       setData([response.data.auctionDetails]);
+  //       // console.log(auctionData);
+  //       // console.log(auctionData.item);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [] );
 
   // console.log(dataAuction[0]['item']);
 
@@ -149,10 +167,10 @@ export const OverviewLatestOrders = (props) => {
                 return (
                   <TableRow
                     hover
-                    key={order.id}
+                    key={order.auctionID}
                   >
                     <TableCell>
-                      0001
+                      {order.auctionID}
                     </TableCell>
                     <TableCell>
                       {order.item}

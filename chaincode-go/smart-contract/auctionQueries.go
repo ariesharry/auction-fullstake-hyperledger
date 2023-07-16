@@ -134,3 +134,32 @@ func checkForHigherBid(ctx contractapi.TransactionContextInterface, auctionPrice
 
 	return error
 }
+
+// QueryAuctionsByStatus retrieves all auctions based on their status (open or closed)
+func (s *SmartContract) QueryAuctionsByStatus(ctx contractapi.TransactionContextInterface, status string) ([]*Auction, error) {
+	queryString := fmt.Sprintf(`{"selector":{"status":"%s"}}`, status)
+	resultsIterator, err := ctx.GetStub().GetQueryResult(queryString)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query auctions: %v", err)
+	}
+	defer resultsIterator.Close()
+
+	var auctions []*Auction
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return nil, fmt.Errorf("failed to iterate over query results: %v", err)
+		}
+
+		var auction Auction
+		err = json.Unmarshal(queryResponse.Value, &auction)
+		if err != nil {
+			return nil, fmt.Errorf("failed to unmarshal auction JSON: %v", err)
+		}
+
+		auctions = append(auctions, &auction)
+	}
+
+	return auctions, nil
+}
+

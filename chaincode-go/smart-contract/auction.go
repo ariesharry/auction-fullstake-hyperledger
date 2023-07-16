@@ -20,7 +20,7 @@ type SmartContract struct {
 
 // Auction data
 type Auction struct {
-	Type         string             `json:"objectType"`
+	AuctionID     string             `json:"auctionID"`
 	ItemSold     string             `json:"item"`
 	Seller       string             `json:"seller"`
 	Quantity     int                `json:"quantity"`
@@ -31,6 +31,9 @@ type Auction struct {
 	Price        int                `json:"price"`
 	Status       string             `json:"status"`
 	Auditor      bool               `json:"auditor"`
+	ReservePrice int                `json:"reservePrice"`
+	StartTime    string             `json:"startTime"`
+	EndTime      string             `json:"endTime"`
 }
 
 // FullBid is the structure of a revealed bid
@@ -58,7 +61,7 @@ const bidKeyType = "bid"
 
 // CreateAuction creates on auction on the public channel. The identity that
 // submits the transacion becomes the seller of the auction
-func (s *SmartContract) CreateAuction(ctx contractapi.TransactionContextInterface, auctionID string, itemsold string, quantity int, withAuditor string) error {
+func (s *SmartContract) CreateAuction(ctx contractapi.TransactionContextInterface, auctionID string, itemsold string, quantity int, withAuditor string, reservePrice int, startTime string, endTime string) error {
 
 	// get ID of submitting client
 	clientID, err := s.GetSubmittingClientIdentity(ctx)
@@ -83,7 +86,7 @@ func (s *SmartContract) CreateAuction(ctx contractapi.TransactionContextInterfac
 	revealedBids := make(map[string]FullBid)
 
 	auction := Auction{
-		Type:         "auction",
+		AuctionID:     auctionID,
 		ItemSold:     itemsold,
 		Quantity:     quantity,
 		Price:        0,
@@ -94,6 +97,9 @@ func (s *SmartContract) CreateAuction(ctx contractapi.TransactionContextInterfac
 		Winners:      []Winners{},
 		Status:       "open",
 		Auditor:      auditor,
+		ReservePrice: reservePrice,
+		StartTime:    startTime,
+		EndTime:      endTime,
 	}
 
 	auctionJSON, err := json.Marshal(auction)
@@ -157,6 +163,28 @@ func (s *SmartContract) Bid(ctx contractapi.TransactionContextInterface, auction
 	err = ctx.GetStub().PutPrivateData(collection, bidKey, bidJSON)
 	if err != nil {
 		return "", fmt.Errorf("failed to input price into collection: %v", err)
+	}
+
+	// return the transaction ID so that the user can identify their bid
+	// check if bid price is below reserve price
+	auction, err := s.QueryAuction(ctx, auctionID)
+	if err != nil {
+		return "", fmt.Errorf("failed to get auction from public state %v", err)
+	}
+
+	bidInput := struct {
+		Quantity int    `json:"quantity"`
+		Price    int    `json:"price"`
+		Org      string `json:"org"`
+		Buyer    string `json:"buyer"`
+	}{}
+	err = json.Unmarshal(bidJSON, &bidInput)
+	if err != nil {
+		return "", fmt.Errorf("failed to unmarshal JSON: %v", err)
+	}
+
+	if bidInput.Price < auction.ReservePrice {
+		return "", fmt.Errorf("bid price is below the reserve price")
 	}
 
 	// return the trannsaction ID so that the uset can identify their bid

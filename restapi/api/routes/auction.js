@@ -7,7 +7,7 @@ const { buildCCPOrg1, buildCCPOrg2, buildWallet, prettyJSONString } = require('.
 const myChannel = 'mychannel';
 const myChaincodeName = 'auction';
 
-async function createAuction (ccp, wallet, user, auctionID, item, quantity, auditor) {
+async function createAuction (ccp, wallet, user, auctionID, item, quantity, auditor, reservePrice, startTime, endTime) {
 	try {
 		const gateway = new Gateway();
 		// connect using Discovery enabled
@@ -21,7 +21,7 @@ async function createAuction (ccp, wallet, user, auctionID, item, quantity, audi
 		const statefulTxn = contract.createTransaction('CreateAuction');
 
 		console.log('\n--> Submit Transaction: Propose a new auction');
-		await statefulTxn.submit(auctionID, item, parseInt(quantity), auditor);
+		await statefulTxn.submit(auctionID, item, parseInt(quantity), auditor, reservePrice, startTime, endTime);
 		console.log('*** Result: committed');
 
 		console.log('\n--> Evaluate Transaction: query the auction that was just created');
@@ -35,11 +35,6 @@ async function createAuction (ccp, wallet, user, auctionID, item, quantity, audi
 	}
 }
 
-// router.get('/', (req, res, next) => {
-//     res.status(200).json({
-//         message: 'success get broo!'
-//     });
-// });
 
 router.post('/', async function (req, res, next) {
     const auction ={
@@ -48,7 +43,10 @@ router.post('/', async function (req, res, next) {
         auctionID: req.body.auctionID,
         item: req.body.item,
         quantity: req.body.quantity,
-        auditor: req.body.auditor
+        auditor: req.body.auditor,
+        reservePrice: req.body.reservePrice,
+        startTime: req.body.startTime,
+        endTime: req.body.endTime
     }
     try {
         const org = auction.org;
@@ -57,17 +55,20 @@ router.post('/', async function (req, res, next) {
         const item = auction.item;
         const quantity = auction.quantity;
         const auditor = auction.auditor;
+        const reservePrice = auction.reservePrice;
+        const startTime = auction.startTime;
+        const endTime = auction.endTime;
 
         if (org === "Org1" || org === "org1") {
             const ccp = buildCCPOrg1();
             const walletPath = path.join(__dirname, 'wallet/org1');
             const wallet = await buildWallet(Wallets, walletPath);
-            await createAuction(ccp, wallet, user, auctionID, item, quantity, auditor);
+            await createAuction(ccp, wallet, user, auctionID, item, quantity, auditor, reservePrice, startTime, endTime);
         } else if (org === 'Org2' || org === 'org2') {
             const ccp = buildCCPOrg2();
             const walletPath = path.join(__dirname, 'wallet/org2');
             const wallet = await buildWallet(Wallets, walletPath);
-            await createAuction(ccp, wallet, user, auctionID, item, quantity, auditor);
+            await createAuction(ccp, wallet, user, auctionID, item, quantity, auditor, reservePrice, startTime, endTime);
         } else {
             console.log('Usage: node createAuction.js org userID auctionID item quantity');
             console.log('Org must be Org1 or Org2');

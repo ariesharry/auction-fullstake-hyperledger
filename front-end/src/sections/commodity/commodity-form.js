@@ -92,7 +92,9 @@ export const CommodityForm = () => {
 
   const addCommodity = (e) => {
     e.preventDefault();
-    axios.post('http://103.250.10.234:3001/addCommodity', {
+    axios.post('http://20.5.96.89:3001/addCommodity', {
+      org: "org1",
+      user: "PTPN4",
       issuer: values.issuer,
       id: values.id,
       issueDate: values.issueDate,

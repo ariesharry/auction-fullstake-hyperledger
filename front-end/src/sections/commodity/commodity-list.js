@@ -86,9 +86,9 @@ export const CommodityList = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post('http://103.250.10.234:3001/queryCommodity', {
+        const response = await axios.post('http://20.5.96.89:3001/queryCommodity', {
         org: 'org1',
-        user: 'ptpn5',  
+        user: 'PTPN4',  
         query: 'value'
         });
         setData([response.data.result]);

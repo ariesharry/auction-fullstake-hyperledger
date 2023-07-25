@@ -96,10 +96,9 @@ export default function AuctionResult() {
     return { auctionId, winner, quantity, price };
   };
   const rows = [
-    createData('00013', 'Sinarmas', 3000, 11900),
-    createData('00013', 'Wilmar', 2500, 11800),
-    createData('00013', 'PHPO', 2000, 11700),
-    createData('00013', 'Nagamas', 2500, 11600),
+    createData('00013', 'PHPO', 500, 10020),
+    createData('00013', 'NPO', 500, 10018),
+    createData('00013', 'WNI', 1000, 10018),
   ];
 
   return (
@@ -112,28 +111,24 @@ export default function AuctionResult() {
         <DialogContent>
         <Descriptions title="Auction Results" layout="vertical" bordered column={4}>
           <Descriptions.Item label="Auction ID"> 
-            <p>0001</p>
-            <p>0001</p>
-            <p>0001</p>
-            <p>0001</p>
+            <p>00004</p>
+            <p>00004</p>
+            <p>00004</p>
           </Descriptions.Item>
           <Descriptions.Item label="___Winner">
-            <p>Sinarmas</p>
-            <p>Wilmar</p>
             <p>PHPO</p>
-            <p>Nagamas</p>
+            <p>NPO</p>
+            <p>WNI</p>
           </Descriptions.Item>
           <Descriptions.Item label="Quantity">
-            <p>3000</p>
-            <p>2500</p>
-            <p>2000</p>
-            <p>2500</p>
+            <p>500</p>
+            <p>500</p>
+            <p>1000</p>
           </Descriptions.Item>
           <Descriptions.Item label="Price__">
-            <p>11900</p>
-            <p>11800</p>
-            <p>11700</p>
-            <p>11600</p>
+            <p>10020</p>
+            <p>10018</p>
+            <p>10018</p>
           </Descriptions.Item>
         </Descriptions>
           

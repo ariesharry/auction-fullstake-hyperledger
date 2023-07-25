@@ -8,7 +8,7 @@ import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
 import { useState, useCallback } from 'react';
 import axios from 'axios';
 import Fade from '@mui/material/Fade';
-import { OverviewLatestOrders } from 'src/sections/overview/overview-latest-orders';
+import { OverviewLatestOrders } from 'src/sections/explorer/overview-latest-orders';
 import { BidHistory } from 'src/sections/explorer/history-bid';
 
 
@@ -21,7 +21,7 @@ const Page = () => {
     {
       
           0: {
-            TxId:"0001",
+            TxId:"00004",
             Value: {
                   
               }
@@ -69,10 +69,10 @@ const Page = () => {
 
   const queryHistoryCommodity = () => {
     // e.preventDefault();
-    axios.post('http://103.250.10.234:3001/queryCommodityId', {
+    axios.post('http://20.5.96.89:3001/queryCommodityId', {
       org: "org1",
-      user: "ptpn5",
-      key: "PTPN",
+      user: "PTPN4",
+      key: "PTPN IV",
       id: values.id
     }).then(res => setData([res.data.result])).catch(err => console.log(err));
   };
@@ -157,7 +157,7 @@ const Page = () => {
           <Grid
             xs={12}
             md={12}
-            lg={7}
+            lg={12}
           >
             <DetailsCommodity dataAuction = {dataAuction} />  
           </Grid>
@@ -167,7 +167,7 @@ const Page = () => {
           <Grid
             xs={12}
             md={12}
-            lg={7}
+            lg={12}
           >
             <OverviewLatestOrders />  
           </Grid>

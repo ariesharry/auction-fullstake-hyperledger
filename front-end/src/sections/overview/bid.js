@@ -56,22 +56,22 @@ export default function FormDialog() {
 
   const addBid = () => {
     // e.preventDefault();
-    axios.post('http://103.250.10.234:3001/bid', {
+    axios.post('http://20.5.96.89:3001/bid', {
       org: "org2",
-      user: "bidder1",
-      auctionID: "00013",
-      quantity: 2000,
-      price: 10000
+      user: "PHPO",
+      auctionID: "00004",
+      quantity: 500,
+      price: 10020
     }).then(res => setDataID([res.data.auctionCreated])).catch(err => console.log(err));
     handleClickAlert();
   };
 
   const submitBid = () => {
     // e.preventDefault();
-    axios.post('http://103.250.10.234:3001/submitBid', {
+    axios.post('http://20.5.96.89:3001/submitBid', {
       org: "org2",
-      user: "bidder1",
-      auctionID: "00013",
+      user: "PHPO",
+      auctionID: "00004",
       bidID: 2000
     }).then(res => setDataID([res.data.auctionCreated])).catch(err => console.log(err));
     handleClickAlertSubmit();
@@ -106,7 +106,7 @@ export default function FormDialog() {
           </DialogContentText>
           <DialogContentText>
           <br></br>
-            <b>Total supply:</b> 10000 Ton <br></br>
+            <b>Total supply:</b> 2000 Ton <br></br>
             <b>Quality:</b> Grade A (ALB 3.51% sd 5% dan M+I 0.5%)
           </DialogContentText>
           <br></br>

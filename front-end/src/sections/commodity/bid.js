@@ -13,10 +13,20 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { Grid } from '@mui/material';
+import { TextField } from '@mui/material';
+import { useCallback } from 'react';
 
 export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
   const [openAlert, setOpenAlert] = React.useState(false);
+  const [values, setValues] = useState({
+    reservePrice: '',
+    startTime: '',
+    endTime: ''
+  });
+
+  console.log(values);
 
   const [data, setData] = useState([
     {
@@ -90,13 +100,23 @@ export default function FormDialog(props) {
   
   const addCommodity = () => {
     // e.preventDefault();
-    axios.post('http://103.250.10.234:3001/queryCommodityId', {
+    axios.post('http://20.5.96.89:3001/queryCommodityId', {
     org: "org1",
-    user: "ptpn5",
+    user: "PTPN4",
     key: props.keyValue,
     id: props.idValue
     }).then(res => setData([res.data.result])).catch(err => console.log(err));
   };
+
+  const handleChange = useCallback(
+    (event) => {
+      setValues((prevState) => ({
+        ...prevState,
+        [event.target.name]: event.target.value
+      }));
+    },
+    []
+  );
 
   const handleClickAlert = () => {
     setOpenAlert(true);
@@ -117,13 +137,16 @@ export default function FormDialog(props) {
 
   const addAuction = (e) => {
     e.preventDefault();
-    axios.post('http://103.250.10.234:3001/auction', {
+    axios.post('http://20.5.96.89:3001/auction', {
       org: "org1",
-      user: "ptpn5",
+      user: "PTPN4",
       auctionID: dataAuction[0].id,
       item: dataAuction[0].commodity,
       quantity: dataAuction[0].quantity,
-      auditor: "withAuditor"
+      auditor: "withoutAuditor",
+      reservePrice: values.reservePrice,
+      startTime: values.startTime,
+      endTime: values.endTime
     }).then(res => console.log("adding new auction", res)).catch(err => console.log(err));
     handleClickAlert();
   };
@@ -156,6 +179,54 @@ export default function FormDialog(props) {
           <Descriptions.Item label="Port of Loading"> { dataAuction[0].portOfLoading } </Descriptions.Item>
           <Descriptions.Item label="Delivery Conditions"> { dataAuction[0].deliveryConditions } </Descriptions.Item>
         </Descriptions>
+          <Grid
+            container
+            spacing={0}
+          >
+            <Grid
+              xs={12}
+              md={4}
+            >
+              <TextField
+                fullWidth
+                label="Reserve Price"
+                name="reservePrice"
+                onChange={handleChange}
+                required
+                // value={values.user}
+              />
+            </Grid>
+
+            <Grid
+              xs={12}
+              md={4}
+            >
+              <TextField
+                fullWidth
+                label="Start Time"
+                name="startTime"
+                onChange={handleChange}
+                required
+                // value={values.user}
+              />
+            </Grid>
+            <Grid
+              xs={12}
+              md={4}
+            >
+              <TextField
+                fullWidth
+                label="End Time"
+                name="endTime"
+                onChange={handleChange}
+                required
+                // value={values.user}
+              />
+            </Grid>
+
+          </Grid>
+          
+        
         <FormControlLabel required control={<Checkbox />} label="I agree with the terms and conditions" />
         </DialogContent>
         

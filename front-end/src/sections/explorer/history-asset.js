@@ -28,43 +28,43 @@ export const HistoryAsset = () => (
         mode="left"
         items={[
           {
-            label: '07-05-2023',
+            label: '2020-04-07',
             children: (
               <>
                 <p>Status: ISSUED</p>
                 <p>Commodity: CPO</p>
                 <p>Quantity: 2000</p>
-                <p>Owner: PTPN</p>
+                <p>Owner: PTPN IV</p>
               </>
             )},
           {
-            label: '07-05-2023',
+            label: '2020-04-07',
             children: (
               <>
                 <p>Status: TRADING</p>
                 <p>Commodity: CPO</p>
                 <p>Quantity: 500</p>
-                <p>Owner: Sinarmas</p>
+                <p>Owner: PHPO</p>
               </>
             )},
           {
-            label: '07-05-2023',
+            label: '2020-04-07',
             children: (
               <>
                 <p>Status: TRADING</p>
                 <p>Commodity: CPO</p>
                 <p>Quantity: 500</p>
-                <p>Owner: Wilmar</p>
+                <p>Owner: NPO</p>
               </>
             )},
           {
-            label: '07-05-2023',
+            label: '2020-04-07',
             children: (
               <>
                 <p>Status: TRADING</p>
                 <p>Commodity: CPO</p>
                 <p>Quantity: 1000</p>
-                <p>Owner: PHPO</p>
+                <p>Owner: WNI</p>
               </>
             )},
         

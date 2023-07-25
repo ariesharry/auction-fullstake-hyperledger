@@ -28,44 +28,44 @@ const statusMap = {
 export const BidHistory = (props) => {
 
   const [dataAuction, setData] = useState([{
-        id: 'Sinarmas',
-        bidder: 'Sinarmas',
-        price: '11900',
-        quantity: '500',
-        status: 'Accepted'
-      },
-      {
-        id: 'Sinarmas',
-        bidder: 'Wilmar',
-        price: '11900',
-        quantity: '500',
-        status: 'Accepted'
-      },
-      {
-        id: 'Sinarmas',
+        id: 'PHPO',
         bidder: 'PHPO',
-        price: '11900',
+        price: '10020',
+        quantity: '500',
+        status: 'Accepted'
+      },
+      {
+        id: 'NPO',
+        bidder: 'NPO',
+        price: '10018',
+        quantity: '500',
+        status: 'Accepted'
+      },
+      {
+        id: 'WNI',
+        bidder: 'WNI',
+        price: '10018',
         quantity: '1000',
         status: 'Accepted'
       },
       {
-        id: 'Sinarmas',
+        id: 'IBP',
         bidder: 'IBP',
-        price: '11700',
+        price: '9996',
         quantity: '500',
         status: 'Withdrawn'
       },
       {
-        id: 'Sinarmas',
-        bidder: 'Nagamas',
-        price: '11800',
+        id: 'SMART',
+        bidder: 'SMART',
+        price: '9750',
         quantity: '500',
         status: 'Withdrawn'
       },
       {
-        id: 'Sinarmas',
+        id: 'KJA',
         bidder: 'KJA',
-        price: '11850',
+        price: '9850',
         quantity: '500',
         status: 'Withdrawn'
       }]);
@@ -151,9 +151,6 @@ export const BidHistory = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  Auction ID
-                </TableCell>
-                <TableCell>
                   Bidder
                 </TableCell>
                 <TableCell>
@@ -179,9 +176,6 @@ export const BidHistory = (props) => {
                     hover
                     key={order.id}
                   >
-                    <TableCell>
-                      0001
-                    </TableCell>
                     <TableCell>
                       {order.bidder}
                     </TableCell>

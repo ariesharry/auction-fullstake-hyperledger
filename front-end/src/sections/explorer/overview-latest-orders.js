@@ -4,7 +4,7 @@ import ArrowRightIcon from '@heroicons/react/24/solid/ArrowRightIcon';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-  Box,
+  Box, Grid,
   Button,
   Card,
   CardActions,
@@ -19,35 +19,34 @@ import {
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
 import { SeverityPill } from 'src/components/severity-pill';
-import FormDialog from './bid';
 
 const statusMap = {
-  pending: 'warning',
-  delivered: 'success',
-  refunded: 'error'
+  open: 'warning',
+  closed: 'success',
+  ended: 'error'
 };
 
 export const OverviewLatestOrders = (props) => {
 
   const [dataAuction, setData] = useState([{
-        id: 'auction1',
-        seller: 'PTPN',
-        quantity: '10000',
-        item: 'CPO',
-        createdAt: 1555016400000,
-        status: 'Open'
+        auctionID: 'null',
+        seller: 'null',
+        quantity: 'null',
+        item: 'null',
+        createdAt: 'null',
+        status: 'null'
       }]);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post('http://103.250.10.234:3001/queryAuction', {
+        const response = await axios.post('http://20.5.96.89:3001/queryAuction', {
           org: 'org1',
-          user: 'seller',
-          auctionID: 'auction1'
+          user: 'PTPN4',
+          auctionID: "00004"
         });
         setData([response.data.auctionDetails]);
-        // console.log(auctionData);
+        console.log(response.data.auctionDetails);
         // console.log(auctionData.item);
       } catch (error) {
         console.error(error);
@@ -55,6 +54,24 @@ export const OverviewLatestOrders = (props) => {
     };
     fetchData();
   }, [] );
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.post('http://103.250.10.234:3001/queryAuction', {
+  //         org: 'org1',
+  //         user: 'ptpn5',
+  //         auctionID: '0001'
+  //       });
+  //       setData([response.data.auctionDetails]);
+  //       // console.log(auctionData);
+  //       // console.log(auctionData.item);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [] );
 
   // console.log(dataAuction[0]['item']);
 
@@ -112,7 +129,7 @@ export const OverviewLatestOrders = (props) => {
 
   return (
     <Card sx={sx}>
-      <CardHeader title="Crude Palm Oil Auction" />
+      <CardHeader title="CPO Auction" />
       <Scrollbar sx={{ flexGrow: 1 }}>
         <Box sx={{ minWidth: 800 }}>
           <Table>
@@ -137,7 +154,10 @@ export const OverviewLatestOrders = (props) => {
                   Status
                 </TableCell>
                 <TableCell>
-                  Action
+                  Start
+                </TableCell>
+                <TableCell>
+                  End
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -148,10 +168,10 @@ export const OverviewLatestOrders = (props) => {
                 return (
                   <TableRow
                     hover
-                    key={order.id}
+                    key={order.auctionID}
                   >
                     <TableCell>
-                      {order.objectType}
+                      {order.auctionID}
                     </TableCell>
                     <TableCell>
                       {order.item}
@@ -167,11 +187,15 @@ export const OverviewLatestOrders = (props) => {
                     </TableCell> */}
                     <TableCell>
                       <SeverityPill color={statusMap[order.status]}>
-                        {order.status}
+                        Ended
+                        {/* {order.status} */}
                       </SeverityPill>
                     </TableCell>
                     <TableCell>
-                      <FormDialog />
+                      12.30 WIB
+                    </TableCell>
+                    <TableCell>
+                      13.45 WIB
                     </TableCell>
                   </TableRow>
                 );
